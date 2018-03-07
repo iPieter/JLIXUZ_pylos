@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="pylos-core_main" target="1.8" />
+      <module name="pylos-core_test" target="1.8" />
+      <module name="pylos-gui_main" target="1.8" />
+      <module name="pylos-gui_test" target="1.8" />
+      <module name="pylos-student_main" target="1.8" />
+      <module name="pylos-student_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
