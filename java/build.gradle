@@ -8,9 +8,9 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-	repositories{
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
 //	jar{
 ////		baseName = project.name.split("-")[0]
@@ -77,8 +77,8 @@ project(':pylos-gui') {
         }
         from {
             configurations.runtime.collect {
-				it.isDirectory() ? it : zipTree(it)
-			}
+                it.isDirectory() ? it : zipTree(it)
+            }
         }
     }
 }

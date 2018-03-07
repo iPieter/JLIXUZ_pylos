@@ -5,10 +5,12 @@ import javafx.scene.image.Image;
 /**
  * Created by Jan on 13/02/2015.
  */
-public class Material {
+public class Material
+{
 
-	public static Image load(String name) {
-		return new Image(Material.class.getResourceAsStream(name));
-	}
+    public static Image load( String name )
+    {
+        return new Image( Material.class.getResourceAsStream( name ) );
+    }
 
 }
