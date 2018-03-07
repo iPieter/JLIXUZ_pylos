@@ -2,42 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d84ac9e-f635-4cec-9160-218f23006eb5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/battle/Battle.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/battle/Battle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/battle/BattleMain.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/battle/BattleMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosBoard.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosBoard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGame.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameIF.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameIF.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameObserver.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameObserver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameSimulator.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameSimulator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameState.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameType.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosGameType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosLocation.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosLocation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosPlayerColor.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosPlayerColor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosSphere.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosSphere.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosSquare.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/game/PylosSquare.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayer.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayerFactory.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayerFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayerObserver.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayerObserver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayerType.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/PylosPlayerType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PlayerFactoryCodes.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PlayerFactoryCodes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerBestFit.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerBestFit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerMiniMax.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerMiniMax.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerRandomFit.java" afterPath="$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerRandomFit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/game/PylosScene.java" afterPath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/game/PylosScene.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/game/PylosSphere3D.java" afterPath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/game/PylosSphere3D.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/gui/PylosGuiController.java" afterPath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/gui/PylosGuiController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/gui/PylosGuiMain.java" afterPath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/gui/PylosGuiMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/gui/TooltipHack.java" afterPath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/gui/TooltipHack.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/material/Material.java" afterPath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/material/Material.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/testbattle/TestMain.java" afterPath="$PROJECT_DIR$/pylos-gui/src/main/java/be/kuleuven/pylos/testbattle/TestMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/resources/be/kuleuven/pylos/gui/PylosGui.css" afterPath="$PROJECT_DIR$/pylos-gui/src/main/resources/be/kuleuven/pylos/gui/PylosGui.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-gui/src/main/resources/be/kuleuven/pylos/gui/PylosGui.fxml" afterPath="$PROJECT_DIR$/pylos-gui/src/main/resources/be/kuleuven/pylos/gui/PylosGui.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-student/build/classes/main/be/kuleuven/pylos/main/PylosMain.class" afterPath="$PROJECT_DIR$/pylos-student/build/classes/main/be/kuleuven/pylos/main/PylosMain.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-student/build/classes/main/be/kuleuven/pylos/player/student/StudentPlayerRandomFit.class" afterPath="$PROJECT_DIR$/pylos-student/build/classes/main/be/kuleuven/pylos/player/student/StudentPlayerRandomFit.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/main/PylosMain.java" afterPath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/main/PylosMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/PlayerFactoryStudent.java" afterPath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/PlayerFactoryStudent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayer.java" afterPath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayerBestFit.java" afterPath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayerBestFit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayerRandomFit.java" afterPath="$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayerRandomFit.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -179,8 +147,8 @@
       <file leaf-file-name="PylosMain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/main/PylosMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="50" column="60" lean-forward="false" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
+            <state relative-caret-position="325">
+              <caret line="52" column="47" lean-forward="true" selection-start-line="52" selection-start-column="47" selection-end-line="52" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -189,7 +157,7 @@
       <file leaf-file-name="PylosPlayerRandomFit.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerRandomFit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
+            <state relative-caret-position="645">
               <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
               <folding />
             </state>
@@ -229,8 +197,8 @@
       <file leaf-file-name="StudentPlayerRandomFit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayerRandomFit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="53" column="5" lean-forward="true" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+            <state relative-caret-position="174">
+              <caret line="32" column="62" lean-forward="false" selection-start-line="32" selection-start-column="62" selection-end-line="32" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1452,7 +1420,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.PylosGuiMain">
+  <component name="RunManager" selected="Application.PylosMain">
     <configuration default="false" name="java [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -2006,8 +1974,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.PylosGuiMain" />
-        <item index="1" class="java.lang.String" itemvalue="Application.PylosMain" />
+        <item index="0" class="java.lang.String" itemvalue="Application.PylosMain" />
+        <item index="1" class="java.lang.String" itemvalue="Application.PylosGuiMain" />
         <item index="2" class="java.lang.String" itemvalue="Gradle.java:pylos-gui [buildDependents]" />
         <item index="3" class="java.lang.String" itemvalue="Gradle.java:pylos-gui [build]" />
         <item index="4" class="java.lang.String" itemvalue="Gradle.java [assemble]" />
@@ -2030,12 +1998,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1520420191399</updated>
-      <workItem from="1520420195363" duration="4177000" />
+      <workItem from="1520420195363" duration="4518000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4177000" />
+    <option name="totallyTimeSpent" value="4518000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -2092,14 +2060,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/PlayerFactoryStudent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="34" column="22" lean-forward="false" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
@@ -2142,14 +2102,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerRandomFit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -2171,16 +2123,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/main/PylosMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="50" column="60" lean-forward="false" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
+        <state relative-caret-position="325">
+          <caret line="52" column="47" lean-forward="true" selection-start-line="52" selection-start-column="47" selection-end-line="52" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pylos-core/src/main/java/be/kuleuven/pylos/player/codes/PylosPlayerRandomFit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/PlayerFactoryStudent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="34" column="22" lean-forward="false" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pylos-student/src/main/java/be/kuleuven/pylos/player/student/StudentPlayerRandomFit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="53" column="5" lean-forward="true" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+        <state relative-caret-position="174">
+          <caret line="32" column="62" lean-forward="false" selection-start-line="32" selection-start-column="62" selection-end-line="32" selection-end-column="62" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

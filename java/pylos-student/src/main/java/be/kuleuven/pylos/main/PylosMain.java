@@ -50,7 +50,7 @@ public class PylosMain
         PylosPlayer playerLight = new PylosPlayerRandomFit();
         PylosPlayer playerDark  = new StudentPlayerRandomFit();
 
-        Battle.play( playerLight, playerDark, 100 );
+        Battle.play( playerLight, playerDark, 1000000 );
     }
 
 }
