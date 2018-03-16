@@ -26,7 +26,9 @@ public class StudentPlayerRandomFit extends PylosPlayer
         List <PylosLocation> locations = Arrays.asList( board.getLocations() );
 
         Collections.shuffle( locations );
-        PylosLocation location = locations.stream().filter( PylosLocation::isUsable )
+        PylosLocation location = locations.stream()
+                .filter( PylosLocation::isUsable )
+                .filter( l -> !game.moveSphereIsDraw( board.getReserve( this ), l ) )
                 .findFirst().get();
 
 

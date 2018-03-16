@@ -6,6 +6,8 @@ import be.kuleuven.pylos.game.PylosGame;
 import be.kuleuven.pylos.game.PylosGameObserver;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.player.PylosPlayerObserver;
+import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
+import be.kuleuven.pylos.player.codes.PylosPlayerMiniMax;
 import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 
@@ -47,10 +49,10 @@ public class PylosMain
 
     public void startBattle()
     {
-        PylosPlayer playerLight = new PylosPlayerRandomFit();
+        PylosPlayer playerLight = new PylosPlayerBestFit();
         PylosPlayer playerDark  = new StudentPlayerRandomFit();
 
-        Battle.play( playerLight, playerDark, 1000000 );
+        Battle.play( playerLight, playerDark, 1000 );
     }
 
 }
