@@ -43,11 +43,11 @@ then
     System.out.println( sphere + " -> " + location);
 end
 
-rule "Find squares"
+rule "Find squares with 3 spheres from 1 player"
 salience 0
 when
     board : PylosBoard();
-    square : PylosSquare( getInSquare() == 3 )
+    square : PylosSquare( getInSquare() == 3 && (getInSquare( player ) == 3 || getInSquare( player.OTHER ) == 3 ) )
 then
     //get remaining location in square
     PylosLocation location = Arrays.stream( square.getLocations())
