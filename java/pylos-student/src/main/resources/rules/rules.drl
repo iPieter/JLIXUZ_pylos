@@ -5,6 +5,8 @@ import be.kuleuven.pylos.game.PylosBoard
 import be.kuleuven.pylos.game.PylosGame
 import be.kuleuven.pylos.game.PylosLocation
 import be.kuleuven.pylos.game.PylosSphere
+import be.kuleuven.pylos.game.PylosSquare
+import be.kuleuven.pylos.player.student.PylosLine
 import java.util.Arrays
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
@@ -35,6 +37,25 @@ then
     PylosLocation location = board.getBoardLocation( otherSphere.getLocation().X == 1 ? 2 : 1, otherSphere.getLocation().Y == 1 ? 2 : 1, 0 );
 
     PylosSphere sphere = board.getSpheres( player )[0];
+
+    player.addMove( new Move( location, sphere ), 1 );
+
+    System.out.println( sphere + " -> " + location);
+end
+
+rule "Find squares"
+salience 0
+when
+    board : PylosBoard();
+    square : PylosSquare( getInSquare() == 3 )
+then
+    //get remaining location in square
+    PylosLocation location = Arrays.stream( square.getLocations())
+        .filter( l -> !l.isUsed() )
+        .findFirst()
+        .get();
+
+    PylosSphere sphere = board.getReserve( player );
 
     player.addMove( new Move( location, sphere ), 1 );
 

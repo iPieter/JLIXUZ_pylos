@@ -37,6 +37,9 @@ public class StudentPlayerRuleEngine extends PylosPlayer
     @Override
     public void doMove( PylosGameIF game, PylosBoard board )
     {
+        if ( lines == null )
+            generateLines( board );
+
         //clear old list of moves
         this.moveIntegerMap = new HashMap <>();
 
@@ -51,12 +54,15 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         session.insert( game );
         session.insert( board );
 
+        lines.forEach( session::insert );
+        Arrays.asList( board.getAllSquares() ).forEach( session::insert );
+
         session.fireAllRules();
 
         try
         {
             Move bestMove = moveIntegerMap.entrySet().stream()
-                    .sorted()
+                    .sorted( Comparator.comparingInt( Map.Entry::getValue ) )
                     .findFirst()
                     .get().getKey();
 
@@ -70,7 +76,17 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         catch ( NoSuchElementException ex )
         {
             LOGGER.error( "No possible move received from rule engine." );
-            game.pass();
+            //game.pass();
+            List <PylosLocation> locations = Arrays.asList( board.getLocations() );
+
+            Collections.shuffle( locations );
+            location = locations.stream()
+                    .filter( PylosLocation::isUsable )
+                    .filter( l -> !game.moveSphereIsDraw( board.getReserve( this ), l ) )
+                    .findFirst().get();
+
+
+            game.moveSphere( board.getReserve( this ), location );
         }
     }
 
