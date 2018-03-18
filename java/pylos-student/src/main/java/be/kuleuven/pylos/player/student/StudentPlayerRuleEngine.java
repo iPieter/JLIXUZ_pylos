@@ -188,7 +188,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         try
         {
             Move bestMove = moveIntegerMap.entrySet().stream()
-                    .sorted( Comparator.comparingInt( Map.Entry::getValue ) )
+                    .sorted( Map.Entry.comparingByValue( (v1, v2) -> v2 - v1 ) )
                     .findFirst()
                     .get().getKey();
 
