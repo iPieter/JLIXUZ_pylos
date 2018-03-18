@@ -8,6 +8,7 @@ import be.kuleuven.pylos.game.PylosSphere
 import be.kuleuven.pylos.game.PylosSquare
 import be.kuleuven.pylos.player.student.PylosLine
 import java.util.Arrays
+import java.util.Optional
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
 
@@ -46,15 +47,17 @@ salience 0
 when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
-    square : PylosSquare( getInSquare() == 3 && (getInSquare( player ) == 3 || getInSquare( player.OTHER ) == 3 ) )
+    square : PylosSquare( getInSquare() == 3
+                && (getInSquare( player ) == 3
+                       || getInSquare( player.OTHER ) == 3
+                    ))
 then
     //get remaining location in square
-    PylosLocation location = Arrays.stream( square.getLocations())
-        .filter( l -> !l.isUsed() )
-        .findFirst()
-        .get();
+    Optional<PylosLocation> location = Arrays.stream( square.getLocations())
+        .filter( l -> !l.isUsed() && l.isUsable())
+        .findFirst();
 
     PylosSphere sphere = board.getReserve( player );
 
-    player.addMove( new Move( location, sphere ), 1 );
+    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 1 ));
 end

@@ -71,11 +71,11 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         if ( move == null )
         {
             /* removeSphere a random sphere */
-            Stream<PylosSphere> stream = Arrays.stream( board.getSpheres( this ) );
+            Stream <PylosSphere> stream = Arrays.stream( board.getSpheres( this ) );
             Optional <PylosSphere> sphere = stream.filter( PylosSphere::canRemove )
                     .findFirst();
 
-            move = new Move(  null, sphere.get() );
+            move = new Move( null, sphere.get() );
         }
 
         game.removeSphere( move.getSphere() );
@@ -84,6 +84,30 @@ public class StudentPlayerRuleEngine extends PylosPlayer
     @Override
     public void doRemoveOrPass( PylosGameIF game, PylosBoard board )
     {
+        Move move = fireRules( game, board );
+
+        //generate a random move if there is none from the rule engine
+        if ( move == null )
+        {
+            /* removeSphere a random sphere */
+            Stream <PylosSphere> stream = Arrays.stream( board.getSpheres( this ) );
+            Optional <PylosSphere> sphere = stream.filter( PylosSphere::canRemove )
+                    .findFirst();
+
+            if ( sphere.isPresent() )
+            {
+                move = new Move( null, sphere.get() );
+            }
+            else
+            {
+                game.pass();
+                return;
+            }
+
+        }
+
+        game.removeSphere( move.getSphere() );
+
 
     }
 

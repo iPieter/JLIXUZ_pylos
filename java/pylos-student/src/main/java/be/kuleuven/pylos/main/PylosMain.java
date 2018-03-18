@@ -31,8 +31,8 @@ public class PylosMain
 
 		/* !!! vm argument !!! -ea */
 
-        new PylosMain().startSingleGame();
-		//new PylosMain().startBattle();
+        //new PylosMain().startSingleGame();
+		new PylosMain().startBattle();
 
     }
 
@@ -51,7 +51,7 @@ public class PylosMain
 
     public void startBattle()
     {
-        PylosPlayer playerLight = new PylosPlayerBestFit();
+        PylosPlayer playerLight = new StudentPlayerRandomFit();
         PylosPlayer playerDark  = new StudentPlayerRuleEngine();
 
         Battle.play( playerLight, playerDark, 100 );

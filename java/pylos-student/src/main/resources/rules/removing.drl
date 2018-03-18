@@ -16,7 +16,7 @@ salience 0
 when
     board : PylosBoard()
     PylosGame( state == state.REMOVE_FIRST )
-    square : PylosSquare( getInSquare() == 4 && (getInSquare( player ) == 4 ) )
+    square : PylosSquare( getInSquare() == 4 && (getInSquare( player ) == 4 || getInSquare( player.OTHER ) == 0 ) )
 then
     //get remaining location in square
     PylosLocation location = Arrays.stream( square.getLocations())
