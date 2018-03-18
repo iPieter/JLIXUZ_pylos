@@ -37,6 +37,9 @@ public class StudentPlayerBestFit extends PylosPlayer
     {
         PylosLocation location = null;
 
+
+
+        /*
         switch (board.getNumberOfSpheresOnBoard())
         {
             case 0:
@@ -54,7 +57,7 @@ public class StudentPlayerBestFit extends PylosPlayer
                 break;
             default:
 
-        }
+        }*/
 
 
         game.moveSphere( board.getSpheres( this )[0], location );
