@@ -68,8 +68,26 @@ when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
     square : PylosSquare( getInSquare() == 4
-                && (getInSquare( player ) == 3
+                && (getInSquare( player ) <= 1
                        || getInSquare( player.OTHER ) == 3
+                    )
+                && topLocation.usable)
+then
+    //get remaining location in square
+
+    PylosSphere sphere = board.getReserve( player );
+
+    player.addMove( new Move( square.getTopLocation(), sphere ), 3 );
+end
+
+rule "Find filled squares with 2 spheres from 1 player"
+salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    square : PylosSquare( getInSquare() == 4
+                && (getInSquare( player ) <= 2
+                       || getInSquare( player.OTHER ) == 2
                     )
                 && topLocation.usable)
 then
