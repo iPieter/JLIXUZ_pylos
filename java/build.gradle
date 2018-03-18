@@ -51,8 +51,7 @@ project(':pylos-student') {
     }
 
     ext {
-        droolsVersion = "6.3.0.Final"
-        spockVersion = "1.0-groovy-2.4"
+        droolsVersion = "7.6.0.Final"
     }
 
     test {

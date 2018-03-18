@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/java.iml" filepath="$PROJECT_DIR$/java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pylos-gui/java-pylos-gui_test.iml" filepath="$PROJECT_DIR$/.idea/modules/pylos-gui/java-pylos-gui_test.iml" group="pylos-gui" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pylos-student/java-pylos-student_test.iml" filepath="$PROJECT_DIR$/.idea/modules/pylos-student/java-pylos-student_test.iml" group="pylos-student" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pylos-core/pylos-core.iml" filepath="$PROJECT_DIR$/.idea/modules/pylos-core/pylos-core.iml" group="pylos-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pylos-core/pylos-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/pylos-core/pylos-core_main.iml" group="pylos-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pylos-core/pylos-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/pylos-core/pylos-core_test.iml" group="pylos-core" />

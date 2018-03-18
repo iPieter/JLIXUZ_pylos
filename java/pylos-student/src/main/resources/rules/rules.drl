@@ -5,15 +5,35 @@ import be.kuleuven.pylos.game.PylosBoard
 import be.kuleuven.pylos.game.PylosGame
 import be.kuleuven.pylos.game.PylosLocation
 import be.kuleuven.pylos.game.PylosSphere
+import java.util.Arrays
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
 
-rule "Latency bottleneck"
+rule "First move as white"
 salience 0
 when
     board : PylosBoard( numberOfSpheresOnBoard == 0 );
 then
     PylosLocation location = board.getBoardLocation( 1, 1, 0 );
+    PylosSphere sphere = board.getSpheres( player )[0];
+
+    player.addMove( new Move( location, sphere ), 1 );
+
+    System.out.println( sphere + " -> " + location);
+end
+
+rule "First move as black"
+salience 0
+when
+    board : PylosBoard( numberOfSpheresOnBoard == 1 );
+then
+    PylosSphere otherSphere = Arrays.stream( board.getSpheres() )
+                            .filter( s -> !s.isReserve() )
+                            .filter( s -> s.PLAYER_COLOR != player.PLAYER_COLOR ) //not really needed
+                            .findFirst().get();
+
+    PylosLocation location = board.getBoardLocation( otherSphere.getLocation().X == 1 ? 2 : 1, otherSphere.getLocation().Y == 1 ? 2 : 1, 0 );
+
     PylosSphere sphere = board.getSpheres( player )[0];
 
     player.addMove( new Move( location, sphere ), 1 );

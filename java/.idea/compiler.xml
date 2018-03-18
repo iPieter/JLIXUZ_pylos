@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="java-pylos-gui_test" target="1.8" />
+      <module name="java-pylos-student_test" target="1.8" />
       <module name="pylos-core_main" target="1.8" />
       <module name="pylos-core_test" target="1.8" />
       <module name="pylos-gui_main" target="1.8" />

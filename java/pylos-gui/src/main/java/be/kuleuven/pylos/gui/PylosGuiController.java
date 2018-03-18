@@ -258,8 +258,8 @@ public class PylosGuiController implements Initializable, PylosGameObserver, Pyl
 
         cbPlayerLight.getItems().addAll( allTypes );
         cbPlayerDark.getItems().addAll( allTypes );
-        cbPlayerLight.getSelectionModel().select( 0 );
-        cbPlayerDark.getSelectionModel().select( 0 );
+        cbPlayerLight.getSelectionModel().select( allTypes.size() - 1 );
+        cbPlayerDark.getSelectionModel().select( allTypes.size() - 1 );
 
     }
 

@@ -70,6 +70,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         catch ( NoSuchElementException ex )
         {
             LOGGER.error( "No possible move received from rule engine." );
+            game.pass();
         }
     }
 
