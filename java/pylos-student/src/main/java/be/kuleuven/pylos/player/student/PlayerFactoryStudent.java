@@ -46,5 +46,14 @@ public class PlayerFactoryStudent extends PylosPlayerFactory
                 return new StudentPlayerBestFit();
             }
         } );
+
+        add( new PylosPlayerType( "Student - Rule engine" )
+        {
+            @Override
+            public PylosPlayer create()
+            {
+                return new StudentPlayerRuleEngine();
+            }
+        } );
     }
 }

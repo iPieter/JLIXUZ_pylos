@@ -22,24 +22,12 @@ public class StudentPlayerBestFit extends PylosPlayer
 
     private KieSession session;
 
-    public StudentPlayerBestFit()
-    {
-        KieContainer kieContainer = KnowledgeSessionHelper.createRuleBase();
-
-        session = KnowledgeSessionHelper
-                .getStatefulKnowledgeSession( kieContainer, "ksession-rules" );
-
-    }
-
 
     @Override
     public void doMove( PylosGameIF game, PylosBoard board )
     {
         PylosLocation location = null;
 
-
-
-        /*
         switch (board.getNumberOfSpheresOnBoard())
         {
             case 0:
@@ -52,12 +40,11 @@ public class StudentPlayerBestFit extends PylosPlayer
                 PylosSphere sphere = Arrays.stream( board.getSpheres() )
                         .filter( s -> !s.isReserve() )
                         .findFirst().get();
-                session.fireAllRules();
                 location = board.getBoardLocation( sphere.getLocation().X == 1 ? 2 : 1, sphere.getLocation().Y == 1 ? 2 : 1, 0 );
                 break;
             default:
 
-        }*/
+        }
 
 
         game.moveSphere( board.getSpheres( this )[0], location );

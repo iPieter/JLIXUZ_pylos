@@ -1,10 +1,22 @@
 package rules;
 
+import be.kuleuven.pylos.Move
+import be.kuleuven.pylos.game.PylosBoard
+import be.kuleuven.pylos.game.PylosGame
+import be.kuleuven.pylos.game.PylosLocation
+import be.kuleuven.pylos.game.PylosSphere
+
+global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
 
 rule "Latency bottleneck"
 salience 0
 when
-
+    board : PylosBoard( numberOfSpheresOnBoard == 0 );
 then
-    System.out.println("test");
+    PylosLocation location = board.getBoardLocation( 1, 1, 0 );
+    PylosSphere sphere = board.getSpheres( player )[0];
+
+    player.addMove( new Move( location, sphere ), 1 );
+
+    System.out.println( sphere + " -> " + location);
 end
