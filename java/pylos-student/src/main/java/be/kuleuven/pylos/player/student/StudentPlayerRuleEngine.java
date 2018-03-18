@@ -4,6 +4,7 @@ import be.kuleuven.pylos.Move;
 import be.kuleuven.pylos.game.PylosBoard;
 import be.kuleuven.pylos.game.PylosGameIF;
 import be.kuleuven.pylos.game.PylosLocation;
+import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.util.KnowledgeSessionHelper;
 import org.kie.api.runtime.KieContainer;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Created by Ine on 25/02/2015.
@@ -40,54 +42,49 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         if ( lines == null )
             generateLines( board );
 
-        //clear old list of moves
-        this.moveIntegerMap = new HashMap <>();
+        Move move = fireRules( game, board );
 
-        PylosLocation location = null;
-
-        session = KnowledgeSessionHelper
-                .getStatefulKnowledgeSession( kieContainer, "ksession-rules" );
-
-        //insert this object itself as a receiver of Move facts
-        session.setGlobal( "player", this );
-
-        session.insert( game );
-        session.insert( board );
-
-        lines.forEach( session::insert );
-        Arrays.asList( board.getAllSquares() ).forEach( session::insert );
-
-        session.fireAllRules();
-
-        try
+        //generate a random move if there is none from the rule engine
+        if ( move == null )
         {
-            Move bestMove = moveIntegerMap.entrySet().stream()
-                    .sorted( Comparator.comparingInt( Map.Entry::getValue ) )
-                    .findFirst()
-                    .get().getKey();
-
-            session.dispose();
-
-            LOGGER.info( "Destroying session, received {} moves. Selecting highest.", moveIntegerMap.size() );
-
-            game.moveSphere( bestMove.getSphere(), bestMove.getLocation() );
-
-        }
-        catch ( NoSuchElementException ex )
-        {
-            LOGGER.error( "No possible move received from rule engine." );
-            //game.pass();
             List <PylosLocation> locations = Arrays.asList( board.getLocations() );
 
             Collections.shuffle( locations );
-            location = locations.stream()
+            PylosLocation location = locations.stream()
                     .filter( PylosLocation::isUsable )
                     .filter( l -> !game.moveSphereIsDraw( board.getReserve( this ), l ) )
                     .findFirst().get();
 
-
-            game.moveSphere( board.getReserve( this ), location );
+            move = new Move( location, board.getReserve( this ) );
         }
+
+        game.moveSphere( move.getSphere(), move.getLocation() );
+
+    }
+
+    @Override
+    public void doRemove( PylosGameIF game, PylosBoard board )
+    {
+        Move move = fireRules( game, board );
+
+        //generate a random move if there is none from the rule engine
+        if ( move == null )
+        {
+            /* removeSphere a random sphere */
+            Stream<PylosSphere> stream = Arrays.stream( board.getSpheres( this ) );
+            Optional <PylosSphere> sphere = stream.filter( PylosSphere::canRemove )
+                    .findFirst();
+
+            move = new Move(  null, sphere.get() );
+        }
+
+        game.removeSphere( move.getSphere() );
+    }
+
+    @Override
+    public void doRemoveOrPass( PylosGameIF game, PylosBoard board )
+    {
+
     }
 
     private void generateLines( PylosBoard board )
@@ -125,18 +122,6 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         }
     }
 
-    @Override
-    public void doRemove( PylosGameIF game, PylosBoard board )
-    {
-
-    }
-
-    @Override
-    public void doRemoveOrPass( PylosGameIF game, PylosBoard board )
-    {
-
-    }
-
     public Map <Move, Integer> getMoveIntegerMap()
     {
         return moveIntegerMap;
@@ -149,6 +134,52 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
     public void addMove( Move move, int value )
     {
-        this.moveIntegerMap.put( move, value );
+        if ( this.moveIntegerMap.containsKey( move ) )
+            this.moveIntegerMap.put( move, this.moveIntegerMap.get( move ) + value );
+        else
+            this.moveIntegerMap.put( move, value );
+    }
+
+    private Move fireRules( PylosGameIF game, PylosBoard board )
+    {
+        //clear old list of moves
+        this.moveIntegerMap = new HashMap <>();
+
+        PylosLocation location = null;
+
+        session = KnowledgeSessionHelper
+                .getStatefulKnowledgeSession( kieContainer, "ksession-rules" );
+
+        //insert this object itself as a receiver of Move facts
+        session.setGlobal( "player", this );
+
+        session.insert( game );
+        session.insert( board );
+
+        lines.forEach( session::insert );
+        Arrays.asList( board.getAllSquares() ).forEach( session::insert );
+
+        session.fireAllRules();
+
+        try
+        {
+            Move bestMove = moveIntegerMap.entrySet().stream()
+                    .sorted( Comparator.comparingInt( Map.Entry::getValue ) )
+                    .findFirst()
+                    .get().getKey();
+
+            session.dispose();
+
+            LOGGER.info( "Destroying session, received {} moves. Selecting highest.", moveIntegerMap.size() );
+
+            return bestMove;
+        }
+        catch ( NoSuchElementException ex )
+        {
+            LOGGER.error( "No possible move received from rule engine." );
+            //game.pass();
+        }
+
+        return null;
     }
 }

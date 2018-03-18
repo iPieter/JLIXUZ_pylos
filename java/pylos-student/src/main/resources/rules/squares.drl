@@ -14,20 +14,20 @@ global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
 rule "First move as white"
 salience 0
 when
-    board : PylosBoard( numberOfSpheresOnBoard == 0 );
+    board : PylosBoard( numberOfSpheresOnBoard == 0 )
+    PylosGame( state == state.MOVE )
 then
     PylosLocation location = board.getBoardLocation( 1, 1, 0 );
     PylosSphere sphere = board.getSpheres( player )[0];
 
     player.addMove( new Move( location, sphere ), 1 );
-
-    System.out.println( sphere + " -> " + location);
 end
 
 rule "First move as black"
 salience 0
 when
-    board : PylosBoard( numberOfSpheresOnBoard == 1 );
+    board : PylosBoard( numberOfSpheresOnBoard == 1 )
+    PylosGame( state == state.MOVE )
 then
     PylosSphere otherSphere = Arrays.stream( board.getSpheres() )
                             .filter( s -> !s.isReserve() )
@@ -39,14 +39,13 @@ then
     PylosSphere sphere = board.getSpheres( player )[0];
 
     player.addMove( new Move( location, sphere ), 1 );
-
-    System.out.println( sphere + " -> " + location);
 end
 
 rule "Find squares with 3 spheres from 1 player"
 salience 0
 when
-    board : PylosBoard();
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
     square : PylosSquare( getInSquare() == 3 && (getInSquare( player ) == 3 || getInSquare( player.OTHER ) == 3 ) )
 then
     //get remaining location in square
@@ -58,6 +57,4 @@ then
     PylosSphere sphere = board.getReserve( player );
 
     player.addMove( new Move( location, sphere ), 1 );
-
-    System.out.println( sphere + " -> " + location);
 end
