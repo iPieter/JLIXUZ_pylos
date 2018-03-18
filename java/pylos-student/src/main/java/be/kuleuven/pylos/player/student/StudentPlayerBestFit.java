@@ -5,6 +5,9 @@ import be.kuleuven.pylos.game.PylosGameIF;
 import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
+import be.kuleuven.pylos.util.KnowledgeSessionHelper;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +19,18 @@ import java.util.List;
 public class StudentPlayerBestFit extends PylosPlayer
 {
     private List <PylosLine> lines;
+
+    private KieSession session;
+
+    public StudentPlayerBestFit()
+    {
+        KieContainer kieContainer = KnowledgeSessionHelper.createRuleBase();
+
+        session = KnowledgeSessionHelper
+                .getStatefulKnowledgeSession( kieContainer, "ksession-rules" );
+
+    }
+
 
     @Override
     public void doMove( PylosGameIF game, PylosBoard board )
@@ -34,7 +49,7 @@ public class StudentPlayerBestFit extends PylosPlayer
                 PylosSphere sphere = Arrays.stream( board.getSpheres() )
                         .filter( s -> !s.isReserve() )
                         .findFirst().get();
-
+                session.fireAllRules();
                 location = board.getBoardLocation( sphere.getLocation().X == 1 ? 2 : 1, sphere.getLocation().Y == 1 ? 2 : 1, 0 );
                 break;
             default:
@@ -78,8 +93,6 @@ public class StudentPlayerBestFit extends PylosPlayer
                     board.getBoardLocation(  1, i, 1 ),
                     board.getBoardLocation(  2, i, 1 ) ) );
         }
-
-        System.out.println( lines );
     }
 
     @Override

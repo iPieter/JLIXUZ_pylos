@@ -1,0 +1,10 @@
+package rules;
+
+
+rule "Latency bottleneck"
+salience 0
+when
+
+then
+    System.out.println("test");
+end
