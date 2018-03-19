@@ -4,6 +4,9 @@
 *.iml
 # Ignore Gradle GUI config
 gradle-app.setting
+.idea/compiler.xml
+.idea/modules.xml
+
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
