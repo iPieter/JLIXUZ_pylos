@@ -58,7 +58,7 @@ then
 
     PylosSphere sphere = board.getReserve( player );
 
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 10 ));
+    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 12 ));
 end
 
 rule "Find filled squares with 3 spheres from 1 player"
@@ -76,7 +76,7 @@ then
 
     PylosSphere sphere = board.getReserve( player );
 
-    player.addMove( new Move( square.getTopLocation(), sphere ), 3 );
+    player.addMove( new Move( square.getTopLocation(), sphere ), 20 );
 end
 
 rule "Find filled squares with 2 spheres from 1 player"

@@ -204,6 +204,8 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
         session.fireAllRules();
 
+        System.out.println(moveIntegerMap);
+
         try
         {
             Move bestMove = moveIntegerMap.entrySet().stream()

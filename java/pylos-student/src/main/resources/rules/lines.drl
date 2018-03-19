@@ -25,8 +25,6 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
-    System.out.println(line.getLocations());
-
     PylosSphere sphere = board.getReserve( player );
     location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 1 ));
 end
@@ -52,10 +50,10 @@ rule "Create T"
 when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
-    l1 : PylosLine( isFilledLine() == true && getInLineOwn() == 3 && getInLineOther() == 0 )
+    l1 : PylosLine( getInLineOwn() == 3 )
     l2 : PylosLine( isFilledLine() == false && isEmptyMiddle() == true && getInLineOther() == 0 )
-    p : PylosNeighbour( (line1 == l2 && line2 == l2) || (line1 == l2 && line2 == l1) )
+    p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     PylosSphere sphere = board.getReserve( player );
-    player.addMove( new Move( l2.getMiddle(), sphere ), 6 );
+    player.addMove( new Move( l2.getMiddle(), sphere ), 14 );
 end
