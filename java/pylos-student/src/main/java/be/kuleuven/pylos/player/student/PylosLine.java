@@ -113,6 +113,11 @@ public class PylosLine
         return middle;
     }
 
+    public boolean isEmptyMiddle()
+    {
+        return middle != null && !middle.isUsed();
+    }
+
     /**
      * returns the number of spheres of 'color' in this square
      *

@@ -6,6 +6,7 @@ import be.kuleuven.pylos.game.PylosGame
 import be.kuleuven.pylos.game.PylosLocation
 import be.kuleuven.pylos.game.PylosSphere
 import be.kuleuven.pylos.player.student.PylosLine
+import be.kuleuven.pylos.player.student.PylosNeighbour
 import java.util.Arrays
 import java.util.Optional
 import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine
@@ -51,15 +52,10 @@ rule "Create T"
 when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
-    line : PylosLine( isFilledLine() == true && getInLineOwn() == 3 && getInLineOther() == 0 )
+    l1 : PylosLine( isFilledLine() == true && getInLineOwn() == 3 && getInLineOther() == 0 )
+    l2 : PylosLine( isFilledLine() == false && isEmptyMiddle() == true && getInLineOther() == 0 )
+    p : PylosNeighbour( (line1 == l2 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
-    //get remaining location in square
-    Optional<PylosLocation> location = line.getLocations().stream()
-        .filter( l -> !l.isUsed() && l.isUsable())
-        .findFirst();
-
-    System.out.println(line.getLocations());
-
     PylosSphere sphere = board.getReserve( player );
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 5 ));
+    player.addMove( new Move( l2.getMiddle(), sphere ), 6 );
 end
