@@ -58,12 +58,12 @@ public class StudentPlayerBestFit extends PylosPlayer
         {
             for (int j = 0; j < 2; j++)
             {
-                lines.add( new PylosLine(
+                lines.add( new PylosLine( this.PLAYER_COLOR,
                         board.getBoardLocation( i, j + 0, 0 ),
                         board.getBoardLocation( i, j + 1, 0 ),
                         board.getBoardLocation( i, j + 2, 0 ) ) );
 
-                lines.add( new PylosLine(
+                lines.add( new PylosLine( this.PLAYER_COLOR,
                         board.getBoardLocation( j + 0, i, 0 ),
                         board.getBoardLocation( j + 1, i, 0 ),
                         board.getBoardLocation( j + 2, i, 0 ) ) );
@@ -73,12 +73,12 @@ public class StudentPlayerBestFit extends PylosPlayer
         for (int i = 0; i < 3; i++)
         {
 
-            lines.add( new PylosLine(
+            lines.add( new PylosLine( this.PLAYER_COLOR,
                     board.getBoardLocation( i,  0, 1),
                     board.getBoardLocation( i,  1, 1),
                     board.getBoardLocation( i,  2, 1) ) );
 
-            lines.add( new PylosLine(
+            lines.add( new PylosLine( this.PLAYER_COLOR,
                     board.getBoardLocation(  0, i, 1 ),
                     board.getBoardLocation(  1, i, 1 ),
                     board.getBoardLocation(  2, i, 1 ) ) );

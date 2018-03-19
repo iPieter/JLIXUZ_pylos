@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class PylosLine
 {
+    private PylosPlayerColor color;
     private List <PylosLocation> locations;
 
     public PylosLine( List <PylosLocation> locations )
@@ -20,8 +21,9 @@ public class PylosLine
         this.locations = locations;
     }
 
-    public PylosLine( PylosLocation... locationArray )
+    public PylosLine(PylosPlayerColor color, PylosLocation... locationArray )
     {
+        this.color = color;
         locations = Arrays.asList( locationArray );
     }
 
@@ -44,11 +46,91 @@ public class PylosLine
         return sum;
     }
 
+    /* public methods --------------------------------------------------------------------------------------------- */
+
     /**
+     * returns true if this line contains all the requires spheres
      *
+     * @return
+     */
+    public boolean isFilledLine()
+    {
+        return getInLine() == locations.size();
+    }
+
+    public boolean isLineOwn()
+    {
+        return isLine(color);
+    }
+
+    public boolean isLineOther()
+    {
+        return isLine(color.other());
+    }
+
+
+    /**
+     * returns true if this line contains all the requiredspheres of 'color'
+     *
+     * @param color
+     * @return
+     */
+    public boolean isLine( PylosPlayerColor color )
+    {
+        return getInLine( color ) == locations.size();
+    }
+
+    /**
+     * returns the number of spheres in this line
+     *
+     * @return
+     */
+    public int getInLine()
+    {
+        return (int) locations.stream()
+                .filter( PylosLocation::isUsed )
+                .count();
+    }
+
+    public int getInLineOwn()
+    {
+        return getInLine(color);
+    }
+
+    public int getInLineOther()
+    {
+        return getInLine(color.other());
+    }
+
+
+    /**
+     * returns the number of spheres of 'color' in this square
+     *
+     * @param color
+     * @return
+     */
+    public int getInLine( PylosPlayerColor color )
+    {
+        return (int) locations.stream()
+                .filter( l -> l.isUsed() && l.getSphere().PLAYER_COLOR == color )
+                .count();
+    }
+
+    /**
+     * returns an list containing the 4 locations in this square
+     *
+     * @return
+     */
+    public List <PylosLocation> getLocations()
+    {
+        return locations;
+    }
+
+    /**
      * @param board
      * @param color
      * @return
+     * @deprecated
      */
     public int usedLocations( PylosBoard board, PylosPlayerColor color )
     {

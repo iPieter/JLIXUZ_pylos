@@ -1,0 +1,65 @@
+package rules;
+
+import be.kuleuven.pylos.Move
+import be.kuleuven.pylos.game.PylosBoard
+import be.kuleuven.pylos.game.PylosGame
+import be.kuleuven.pylos.game.PylosLocation
+import be.kuleuven.pylos.game.PylosSphere
+import be.kuleuven.pylos.player.student.PylosLine
+import java.util.Arrays
+import java.util.Optional
+import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine
+
+global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+
+rule "start own line"
+    salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    line : PylosLine( isFilledLine() == false && getInLineOwn() == 1 && getInLineOther() == 0)
+then
+    //get remaining location in square
+    Optional<PylosLocation> location = line.getLocations().stream()
+        .filter( l -> !l.isUsed() && l.isUsable())
+        .findFirst();
+
+    System.out.println(line.getLocations());
+
+    PylosSphere sphere = board.getReserve( player );
+    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 1 ));
+end
+
+rule "Create own line or block other"
+    salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    line : PylosLine( isFilledLine() == false && (getInLine( player.PLAYER_COLOR ) == 2 || getInLine( player.OTHER.PLAYER_COLOR ) == 2) )
+then
+    //get remaining location in square
+    Optional<PylosLocation> location = line.getLocations().stream()
+        .filter( l -> !l.isUsed() && l.isUsable())
+        .findFirst();
+
+    PylosSphere sphere = board.getReserve( player );
+    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 2 ));
+end
+
+rule "Create T"
+    salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    line : PylosLine( isFilledLine() == true && getInLineOwn() == 3 && getInLineOther() == 0 )
+then
+    //get remaining location in square
+    Optional<PylosLocation> location = line.getLocations().stream()
+        .filter( l -> !l.isUsed() && l.isUsable())
+        .findFirst();
+
+    System.out.println(line.getLocations());
+
+    PylosSphere sphere = board.getReserve( player );
+    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 5 ));
+end

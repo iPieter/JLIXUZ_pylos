@@ -6,7 +6,6 @@ import be.kuleuven.pylos.game.PylosGame
 import be.kuleuven.pylos.game.PylosLocation
 import be.kuleuven.pylos.game.PylosSphere
 import be.kuleuven.pylos.game.PylosSquare
-import be.kuleuven.pylos.player.student.PylosLine
 import java.util.Arrays
 import java.util.Optional
 
@@ -59,7 +58,7 @@ then
 
     PylosSphere sphere = board.getReserve( player );
 
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 1 ));
+    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 10 ));
 end
 
 rule "Find filled squares with 3 spheres from 1 player"
@@ -91,9 +90,32 @@ when
                     )
                 && topLocation.usable)
 then
-    //get remaining location in square
-
     PylosSphere sphere = board.getReserve( player );
 
     player.addMove( new Move( square.getTopLocation(), sphere ), 2 );
+end
+
+rule "Find filled squares with 2 spheres from 1 player and block with free sphere"
+salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    square : PylosSquare( getInSquare() == 4
+                && (getInSquare( player ) <= 2
+                       || getInSquare( player.OTHER ) == 2
+                    )
+                && topLocation.usable);
+    s2 : PylosSquare( getInSquare() <= 3
+                && (getInSquare( player ) == 1
+                        || getInSquare( player.OTHER ) <= 2
+                    ));
+then
+    //get remaining location in square
+    Optional<PylosSphere> sphere = Arrays.stream( square.getLocations())
+        .filter( l -> !l.isUsed() && l.isUsable())
+        .map( l -> l.getSphere() )
+        .findFirst();
+
+    sphere.ifPresent(pylosLocation->player.addMove( new Move( square.getTopLocation(), sphere.get() ), 4 ));
+
 end
