@@ -22,7 +22,8 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 {
     private static final Logger LOGGER = LoggerFactory.getLogger( StudentPlayerRuleEngine.class );
 
-    private List <PylosLine> lines;
+    private List <PylosLine>     lines;
+    private List<PylosNeighbour> neighbours;
 
     private Map <Move, Integer> moveIntegerMap;
 
@@ -114,20 +115,37 @@ public class StudentPlayerRuleEngine extends PylosPlayer
     private void generateLines( PylosBoard board )
     {
         lines = new ArrayList <>();
+        neighbours = new ArrayList<>(  );
 
-        for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 2; j++)
         {
-            for (int j = 0; j < 2; j++)
+            PylosLine l1 = null; //first line for neighbours
+            PylosLine l2 = null; //and the rotated second line
+
+            for (int i = 0; i < 4; i++)
             {
-                lines.add( new PylosLine( this.PLAYER_COLOR,
+                PylosLine l = new PylosLine( this.PLAYER_COLOR,
                         board.getBoardLocation( i, j + 0, 0 ),
                         board.getBoardLocation( i, j + 1, 0 ),
-                        board.getBoardLocation( i, j + 2, 0 ) ) );
+                        board.getBoardLocation( i, j + 2, 0 ) );
+                lines.add( l );
 
-                lines.add( new PylosLine( this.PLAYER_COLOR,
+                if (l1 != null)
+                    neighbours.add( new PylosNeighbour( l, l1 ) );
+
+                l1 = l;
+
+                l = new PylosLine( this.PLAYER_COLOR,
                         board.getBoardLocation( j + 0, i, 0 ),
                         board.getBoardLocation( j + 1, i, 0 ),
-                        board.getBoardLocation( j + 2, i, 0 ) ) );
+                        board.getBoardLocation( j + 2, i, 0 ) );
+
+                lines.add( l );
+
+                if (l2 != null)
+                    neighbours.add( new PylosNeighbour( l, l2 ) );
+
+                l2 = l;
             }
         }
 
@@ -181,6 +199,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         session.insert( board );
 
         lines.forEach( session::insert );
+        neighbours.forEach( session::insert );
         Arrays.asList( board.getAllSquares() ).forEach( session::insert );
 
         session.fireAllRules();

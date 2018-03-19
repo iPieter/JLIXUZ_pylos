@@ -13,18 +13,24 @@ import java.util.List;
  */
 public class PylosLine
 {
-    private PylosPlayerColor color;
+    private PylosPlayerColor     color;
     private List <PylosLocation> locations;
+    private PylosLocation        middle;
 
     public PylosLine( List <PylosLocation> locations )
     {
         this.locations = locations;
     }
 
-    public PylosLine(PylosPlayerColor color, PylosLocation... locationArray )
+    public PylosLine( PylosPlayerColor color, PylosLocation... locationArray )
     {
         this.color = color;
         locations = Arrays.asList( locationArray );
+
+        if ( locationArray.length % 2 == 1 )
+        {
+            middle = locations.get( locations.size() / 2 );
+        }
     }
 
     /**
@@ -60,12 +66,12 @@ public class PylosLine
 
     public boolean isLineOwn()
     {
-        return isLine(color);
+        return isLine( color );
     }
 
     public boolean isLineOther()
     {
-        return isLine(color.other());
+        return isLine( color.other() );
     }
 
 
@@ -94,14 +100,18 @@ public class PylosLine
 
     public int getInLineOwn()
     {
-        return getInLine(color);
+        return getInLine( color );
     }
 
     public int getInLineOther()
     {
-        return getInLine(color.other());
+        return getInLine( color.other() );
     }
 
+    public PylosLocation getMiddle()
+    {
+        return middle;
+    }
 
     /**
      * returns the number of spheres of 'color' in this square
