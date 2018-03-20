@@ -16,7 +16,6 @@ when
     board : PylosBoard()
     move : Move( sphere == null )
 then
-    System.out.println("regular reserve");
     PylosSphere sphere = board.getReserve( player );
 
     player.setSphere(sphere, move, 0);
@@ -34,8 +33,6 @@ when
                        || getInSquare( player.OTHER ) <= 2
                     ))
 then
-    System.out.println("board move");
-
     Optional<PylosLocation> location = Arrays.stream( square.getLocations())
         .filter( l -> l.isUsed())
         .filter( l -> l.getSphere().PLAYER_COLOR == player.PLAYER_COLOR)
@@ -44,7 +41,7 @@ then
         .findFirst();
 
     location.ifPresent(lo->{
-        player.setSphere(lo.getSphere(), move, 1);
+        player.setSphere(lo.getSphere(), move, 1); //drools.getRule().getName()
         retract(move);
     });
 end

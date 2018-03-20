@@ -204,8 +204,6 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
         session.fireAllRules();
 
-        System.out.println(moveIntegerMap);
-
         try
         {
             Move bestMove = moveIntegerMap.entrySet().stream()
@@ -221,7 +219,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         }
         catch ( NoSuchElementException ex )
         {
-            LOGGER.error( "No possible move received from rule engine." );
+            LOGGER.warn( "No possible move received from rule engine." );
             //game.pass();
         }
 
