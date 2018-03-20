@@ -1,0 +1,45 @@
+package rules;
+
+import be.kuleuven.pylos.Move
+import be.kuleuven.pylos.game.PylosBoard
+import be.kuleuven.pylos.game.PylosGame
+import be.kuleuven.pylos.game.PylosLocation
+import be.kuleuven.pylos.game.PylosSphere
+import be.kuleuven.pylos.game.PylosSquare
+import java.util.Arrays
+import java.util.Optional
+
+global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+
+rule "Give negative weight to move in unusable square"
+salience -200
+when
+    board : PylosBoard()
+    move : Move(location : location)
+    PylosGame( state == state.MOVE )
+    square : PylosSquare( getInSquare() == 3
+                && location memberOf locations
+                && (getInSquare( player ) <= 2
+                       || getInSquare( player.OTHER ) >= 1
+                    ))
+then
+    player.addMove( move , -3 );
+end
+
+rule "dont help other finish top location"
+salience -200
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    move : Move(location : location)
+    s1 : PylosSquare( getInSquare() == 3,
+            top : topLocation,
+            location memberOf locations)
+    s2 : PylosSquare( getInSquare() == 3
+                && topLocation memberOf locations
+                && (getInSquare( player ) == 0
+                       || getInSquare( player.OTHER ) == 3
+                    ))
+then
+    player.addMove( move , -20);
+end

@@ -96,6 +96,18 @@ then
     insert( move );
 end
 
+rule "Move to top"
+salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    square : PylosSquare( getInSquare() == 4, topLocation.usable)
+then
+    Move move = new Move( square.getTopLocation(), null );
+    player.addMove( move , 5 );
+    insert( move );
+end
+
 /*rule "Find filled squares with 2 spheres from 1 player and block with free sphere"
 salience 0
 when

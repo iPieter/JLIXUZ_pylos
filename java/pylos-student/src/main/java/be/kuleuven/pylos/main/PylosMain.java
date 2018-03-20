@@ -53,7 +53,7 @@ public class PylosMain
 
     public void startBattle()
     {
-        PylosPlayer playerLight = new PylosPlayerMiniMax(4);
+        PylosPlayer playerLight = new PylosPlayerBestFit();
         PylosPlayer playerDark  = new StudentPlayerRuleEngine();
 
         Battle.play( playerLight, playerDark, 100 );
