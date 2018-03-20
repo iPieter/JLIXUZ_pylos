@@ -40,9 +40,12 @@ then
         .filter( l -> l.isUsed())
         .filter( l -> l.getSphere().PLAYER_COLOR == player.PLAYER_COLOR)
         .filter( l -> l.getSphere().canMove())
+        .filter( l -> l.getSphere().canMoveTo( move.getLocation() ))
         .findFirst();
 
-    location.ifPresent(lo->player.setSphere(lo.getSphere(), move, 1));
-    retract(move);
+    location.ifPresent(lo->{
+        player.setSphere(lo.getSphere(), move, 1);
+        retract(move);
+    });
 end
 
