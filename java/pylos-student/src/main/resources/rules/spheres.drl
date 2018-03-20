@@ -1,0 +1,48 @@
+package rules;
+
+import be.kuleuven.pylos.Move
+import be.kuleuven.pylos.game.PylosSphere
+import be.kuleuven.pylos.game.PylosSquare
+import be.kuleuven.pylos.game.PylosBoard
+import java.util.Arrays
+import java.util.Optional
+import be.kuleuven.pylos.game.PylosLocation
+
+global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+
+rule "Take from reserve for remaining moves"
+salience -100
+when
+    board : PylosBoard()
+    move : Move( sphere == null )
+then
+    System.out.println("regular reserve");
+    PylosSphere sphere = board.getReserve( player );
+
+    player.setSphere(sphere, move, 0);
+    retract(move);
+end
+
+rule "Take from board for remaining moves"
+salience -50
+when
+    board : PylosBoard()
+    move : Move( sphere == null, top : location )
+    square : PylosSquare( topLocation != top
+                && getInSquare() <= 4
+                && (getInSquare( player ) <= 3
+                       || getInSquare( player.OTHER ) <= 2
+                    ))
+then
+    System.out.println("board move");
+
+    Optional<PylosLocation> location = Arrays.stream( square.getLocations())
+        .filter( l -> l.isUsed())
+        .filter( l -> l.getSphere().PLAYER_COLOR == player.PLAYER_COLOR)
+        .filter( l -> l.getSphere().canMove())
+        .findFirst();
+
+    location.ifPresent(lo->player.setSphere(lo.getSphere(), move, 1));
+    retract(move);
+end
+

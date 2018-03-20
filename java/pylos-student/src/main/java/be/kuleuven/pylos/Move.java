@@ -12,7 +12,7 @@ import be.kuleuven.pylos.game.PylosSphere;
 public class Move
 {
     private PylosLocation location;
-    private PylosSphere sphere;
+    private PylosSphere   sphere;
 
     public Move( PylosLocation location, PylosSphere sphere )
     {
@@ -59,5 +59,17 @@ public class Move
         int result = getLocation() != null ? getLocation().hashCode() : 0;
         result = 31 * result + (getSphere() != null ? getSphere().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        if ( sphere == null )
+            return location.toString();
+
+        return "Move{" +
+                sphere.ID + " (" + sphere.isReserve() + ") -> " +
+                " -> " + location +
+                '}';
     }
 }

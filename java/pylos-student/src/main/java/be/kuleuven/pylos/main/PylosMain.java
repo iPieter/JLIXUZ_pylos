@@ -9,7 +9,6 @@ import be.kuleuven.pylos.player.PylosPlayerObserver;
 import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
 import be.kuleuven.pylos.player.codes.PylosPlayerMiniMax;
 import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
-import be.kuleuven.pylos.player.student.StudentPlayerBestFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine;
 
@@ -40,8 +39,8 @@ public class PylosMain
     {
         Random random = new Random( 0 );
 
-        PylosPlayer randomPlayerCodes   = new StudentPlayerRuleEngine();
-        PylosPlayer randomPlayerStudent = new PylosPlayerRandomFit();
+        PylosPlayer randomPlayerCodes   = new PylosPlayerRandomFit();
+        PylosPlayer randomPlayerStudent = new StudentPlayerRandomFit();
 
         PylosBoard pylosBoard = new PylosBoard();
         PylosGame  pylosGame  = new PylosGame( pylosBoard, randomPlayerCodes, randomPlayerStudent, random, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE );

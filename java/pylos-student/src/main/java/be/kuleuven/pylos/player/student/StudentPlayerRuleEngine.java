@@ -227,4 +227,10 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
         return null;
     }
+
+    public void setSphere( PylosSphere sphere, Move move, int i )
+    {
+        move.setSphere( sphere );
+        addMove( move, i );
+    }
 }

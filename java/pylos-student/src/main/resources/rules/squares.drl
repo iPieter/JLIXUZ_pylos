@@ -56,9 +56,12 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
-    PylosSphere sphere = board.getReserve( player );
-
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 12 ));
+    if (location.isPresent()){
+        Move move = new Move( location.get(), null );
+        player.addMove( move , 180 );
+        insert( move );
+        System.out.println("insert 180");
+    }
 end
 
 rule "Find filled squares with 3 spheres from 1 player"
@@ -72,11 +75,9 @@ when
                     )
                 && topLocation.usable)
 then
-    //get remaining location in square
-
-    PylosSphere sphere = board.getReserve( player );
-
-    player.addMove( new Move( square.getTopLocation(), sphere ), 20 );
+    Move move = new Move( square.getTopLocation(), null );
+    player.addMove( move , 80 );
+    insert( move );
 end
 
 rule "Find filled squares with 2 spheres from 1 player"
@@ -90,12 +91,12 @@ when
                     )
                 && topLocation.usable)
 then
-    PylosSphere sphere = board.getReserve( player );
-
-    player.addMove( new Move( square.getTopLocation(), sphere ), 2 );
+    Move move = new Move( square.getTopLocation(), null );
+    player.addMove( move , 5 );
+    insert( move );
 end
 
-rule "Find filled squares with 2 spheres from 1 player and block with free sphere"
+/*rule "Find filled squares with 2 spheres from 1 player and block with free sphere"
 salience 0
 when
     board : PylosBoard()
@@ -118,4 +119,4 @@ then
 
     sphere.ifPresent(pylosLocation->player.addMove( new Move( square.getTopLocation(), sphere.get() ), 4 ));
 
-end
+end*/
