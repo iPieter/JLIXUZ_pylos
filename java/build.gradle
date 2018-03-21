@@ -3,7 +3,7 @@ subprojects {
 //    apply plugin: 'application'
     apply plugin: 'java'
 
-    version = '0.1.0'
+    version = '1.0.0'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -21,8 +21,8 @@ subprojects {
 
 project(':pylos-core') {
     dependencies {
-        compile files('../lib/commons-math3-3.0.jar')
-        compile files('../lib/encog-core-3.3.0.jar')
+        compile group: 'org.apache.commons', name: 'commons-math3', version: '3.0'
+        compile group: 'org.encog', name: 'encog-core', version: '3.3.0'
     }
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier += 'sources'
@@ -73,7 +73,7 @@ project(':pylos-student') {
 
 	jar {
 		manifest {
-			attributes 'Main-Class': 'be.kuleuven.pylos.player.main.PylosMain'
+			attributes 'Main-Class': 'be.kuleuven.pylos.main.PylosMain'
 		}
 		from {
 			configurations.runtime.collect {
