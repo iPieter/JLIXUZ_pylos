@@ -25,8 +25,12 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
-    PylosSphere sphere = board.getReserve( player );
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 1 ));
+    location.ifPresent(pylosLocation-> {
+
+        Move move = new Move( location.get(), null );
+        player.addMove( move , 1 );
+        insert( move );
+    });
 end
 
 rule "Block other line"
@@ -41,9 +45,12 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
-    PylosSphere sphere = board.getReserve( player );
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 2 ));
-end
+    location.ifPresent(pylosLocation-> {
+
+        Move move = new Move( location.get(), null );
+        player.addMove( move , 2 );
+        insert( move );
+    });end
 
 rule "Create line stub"
     salience 0
@@ -57,9 +64,12 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
-    PylosSphere sphere = board.getReserve( player );
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 3 ));
-end
+    location.ifPresent(pylosLocation-> {
+
+        Move move = new Move( location.get(), null );
+        player.addMove( move , 3 );
+        insert( move );
+    });end
 
 rule "Create own line"
     salience 0
@@ -73,8 +83,12 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
-    PylosSphere sphere = board.getReserve( player );
-    location.ifPresent(pylosLocation->player.addMove( new Move( location.get(), sphere ), 8 ));
+    location.ifPresent(pylosLocation-> {
+
+        Move move = new Move( location.get(), null );
+        player.addMove( move , 7 );
+        insert( move );
+    });
 end
 
 rule "Create T from line"
@@ -86,8 +100,9 @@ when
     l2 : PylosLine( isFilledLine() == false && isEmptyMiddle() == true && getInLineOther() == 0 )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
-    PylosSphere sphere = board.getReserve( player );
-    player.addMove( new Move( l2.getMiddle(), sphere ), 120 );
+    Move move = new Move( l2.getMiddle(), null );
+    player.addMove( move , 120 );
+    insert( move );
 end
 
 rule "Create T from V"
@@ -99,8 +114,9 @@ when
     l2 : PylosLine( isFilledLine() ==  false && isEmptyMiddle() == false && getInLineOther() == 0 )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
-    PylosSphere sphere = board.getReserve( player );
-    player.addMove( new Move( l1.getMiddle(), sphere ), 120 );
+    Move move = new Move( l1.getMiddle(), null );
+    player.addMove( move , 120 );
+    insert( move );
 end
 
 rule "block other T"
@@ -114,5 +130,19 @@ when
 then
     Move move = new Move( l2.getMiddle(), null );
     player.addMove( move , 100 );
+    insert( move );
+end
+
+rule "Block other V"
+    salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    l1 : PylosLine( getInLineOther() == 2  && isEmptyMiddle() == true )
+    l2 : PylosLine( isFilledLine() ==  false && isEmptyMiddle() == false && getInLineOwn() == 0 )
+    p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
+then
+    Move move = new Move( l2.getMiddle(), null );
+    player.addMove( move , 60 );
     insert( move );
 end

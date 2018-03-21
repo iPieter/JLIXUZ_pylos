@@ -26,3 +26,22 @@ then
 
     player.addMove( new Move( location, location.getSphere() ), 1 );
 end
+
+rule "Rather pass than enable four from other"
+salience 0
+when
+    board : PylosBoard()
+    PylosGame( state == state.MOVE )
+    square : PylosSquare( getInSquare() == 4
+                && (getInSquare( player ) <= 1
+                       || getInSquare( player.OTHER ) == 3
+                    ))
+then
+    //get remaining location in square
+    PylosLocation location = Arrays.stream( square.getLocations())
+        .filter( l -> !l.hasAbove() )
+        .findFirst()
+        .get();
+
+    player.addMove( new Move( location, location.getSphere() ), -1 );
+end

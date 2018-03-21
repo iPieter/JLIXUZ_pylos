@@ -60,7 +60,6 @@ then
         Move move = new Move( location.get(), null );
         player.addMove( move , 180 );
         insert( move );
-        System.out.println("insert 180");
     }
 end
 
