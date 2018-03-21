@@ -21,11 +21,26 @@ when
     PylosGame( state == state.MOVE )
     square : PylosSquare( getInSquare() == 3
                 && location memberOf locations
-                && (getInSquare( player ) <= 2
+                && (getInSquare( player ) <= 1
                        || getInSquare( player.OTHER ) >= 1
                     ))
 then
     player.addMove( move , -25 );
+end
+
+rule "Give negative weight to move in potentially unusable square"
+salience -200
+when
+    board : PylosBoard()
+    move : Move(location : location)
+    PylosGame( state == state.MOVE )
+    square : PylosSquare( getInSquare() == 2
+                && location memberOf locations
+                && (getInSquare( player ) <= 1
+                       || getInSquare( player.OTHER ) >= 1
+                    ))
+then
+    player.addMove( move , -5 );
 end
 
 rule "dont help other finish top location"

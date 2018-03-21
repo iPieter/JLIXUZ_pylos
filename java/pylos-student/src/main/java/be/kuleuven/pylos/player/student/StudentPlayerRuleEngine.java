@@ -170,18 +170,35 @@ public class StudentPlayerRuleEngine extends PylosPlayer
             }
         }
 
+        PylosLine l1 = null; //first line for neighbours
+        PylosLine l2 = null; //and the rotated second line
+
         for (int i = 0; i < 3; i++)
         {
 
-            lines.add( new PylosLine( this.PLAYER_COLOR,
+            PylosLine l = new PylosLine( this.PLAYER_COLOR,
                     board.getBoardLocation( i, 0, 1 ),
                     board.getBoardLocation( i, 1, 1 ),
-                    board.getBoardLocation( i, 2, 1 ) ) );
+                    board.getBoardLocation( i, 2, 1 ) );
 
-            lines.add( new PylosLine( this.PLAYER_COLOR,
+            lines.add( l );
+
+            if ( l1 != null )
+                neighbours.add( new PylosNeighbour( l, l1 ) );
+
+            l1 = l;
+
+            l = new PylosLine( this.PLAYER_COLOR,
                     board.getBoardLocation( 0, i, 1 ),
                     board.getBoardLocation( 1, i, 1 ),
-                    board.getBoardLocation( 2, i, 1 ) ) );
+                    board.getBoardLocation( 2, i, 1 ) );
+
+            lines.add( l );
+
+            if ( l2 != null )
+                neighbours.add( new PylosNeighbour( l, l2 ) );
+
+            l2 = l;
         }
     }
 
