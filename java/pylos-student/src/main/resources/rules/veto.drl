@@ -35,15 +35,14 @@ when
     PylosGame( state == state.MOVE )
     move : Move(location : location)
     s1 : PylosSquare( getInSquare() == 3,
-            top : topLocation,
-            location memberOf locations)
-    s2 : PylosSquare( getInSquare() == 3
-                && topLocation memberOf locations
-                && (getInSquare( player ) == 0
-                       || getInSquare( player.OTHER ) == 3
-                    ))
+            location memberOf locations,
+            top : topLocation)
+    s2 : PylosSquare( getInSquare() == 3,
+                top memberOf locations,
+                getInSquare( player ) == 0 || getInSquare( player.OTHER ) == 3)
 then
-    player.addMove( move , -25);
+    player.addMove( move , -100);
+    System.out.println("VETO top");
 end
 
 

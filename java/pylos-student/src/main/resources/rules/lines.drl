@@ -97,7 +97,7 @@ when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
     l1 : PylosLine( getInLineOwn() == 3 )
-    l2 : PylosLine( isFilledLine() == false && isEmptyMiddle() == true && getInLineOther() == 0 )
+    l2 : PylosLine( isFilledLine() == false, isEmptyMiddle() == true, getInLineOther() == 0 )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l2.getMiddle(), null );
@@ -110,8 +110,8 @@ rule "Create T from V"
 when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
-    l1 : PylosLine( getInLineOwn() == 2  && isEmptyMiddle() == true )
-    l2 : PylosLine( isFilledLine() ==  false && isEmptyMiddle() == false && getInLineOther() == 0 )
+    l1 : PylosLine( getInLineOwn() == 2, isEmptyMiddle() == true )
+    l2 : PylosLine( isFilledLine() ==  false, isEmptyMiddle() == false, getInLineOther() == 0 )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l1.getMiddle(), null );
@@ -142,7 +142,7 @@ when
     l2 : PylosLine( isFilledLine() ==  false && isEmptyMiddle() == false && getInLineOwn() == 0 )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
-    Move move = new Move( l2.getMiddle(), null );
+    Move move = new Move( l1.getMiddle(), null );
     player.addMove( move , 60 );
     insert( move );
 end
