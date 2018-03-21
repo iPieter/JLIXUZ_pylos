@@ -41,7 +41,7 @@ then
         .findFirst();
 
     location.ifPresent(lo->{
-        player.setSphere(lo.getSphere(), move, 1); //drools.getRule().getName()
+        player.setSphere(lo.getSphere(), move, 6); //drools.getRule().getName()
         retract(move);
     });
 end
