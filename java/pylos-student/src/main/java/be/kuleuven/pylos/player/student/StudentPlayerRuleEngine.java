@@ -22,8 +22,8 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 {
     private static final Logger LOGGER = LoggerFactory.getLogger( StudentPlayerRuleEngine.class );
 
-    private List <PylosLine>     lines;
-    private List<PylosNeighbour> neighbours;
+    private List <PylosLine>      lines;
+    private List <PylosNeighbour> neighbours;
 
     private Map <Move, Integer> moveIntegerMap;
 
@@ -43,10 +43,11 @@ public class StudentPlayerRuleEngine extends PylosPlayer
         if ( lines == null )
             generateLines( board );
 
-        Move move = fireRules( game, board );
+        Map.Entry <Move, Integer> moveEntry = fireRules( game, board );
 
+        Move move = null;
         //generate a random move if there is none from the rule engine
-        if ( move == null )
+        if ( moveEntry == null )
         {
             List <PylosLocation> locations = Arrays.asList( board.getLocations() );
 
@@ -58,6 +59,10 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
             move = new Move( location, board.getReserve( this ) );
         }
+        else
+        {
+            move = moveEntry.getKey();
+        }
 
         game.moveSphere( move.getSphere(), move.getLocation() );
 
@@ -66,10 +71,11 @@ public class StudentPlayerRuleEngine extends PylosPlayer
     @Override
     public void doRemove( PylosGameIF game, PylosBoard board )
     {
-        Move move = fireRules( game, board );
+        Map.Entry <Move, Integer> moveEntry = fireRules( game, board );
 
+        Move move = null;
         //generate a random move if there is none from the rule engine
-        if ( move == null )
+        if ( moveEntry == null )
         {
             /* removeSphere a random sphere */
             Stream <PylosSphere> stream = Arrays.stream( board.getSpheres( this ) );
@@ -78,6 +84,10 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
             move = new Move( null, sphere.get() );
         }
+        else
+        {
+            move = moveEntry.getKey();
+        }
 
         game.removeSphere( move.getSphere() );
     }
@@ -85,10 +95,12 @@ public class StudentPlayerRuleEngine extends PylosPlayer
     @Override
     public void doRemoveOrPass( PylosGameIF game, PylosBoard board )
     {
-        Move move = fireRules( game, board );
+        Map.Entry <Move, Integer> moveEntry = fireRules( game, board );
+
+        Move move;
 
         //generate a random move if there is none from the rule engine
-        if ( move == null )
+        if ( moveEntry == null )
         {
             /* removeSphere a random sphere */
             Stream <PylosSphere> stream = Arrays.stream( board.getSpheres( this ) );
@@ -106,6 +118,15 @@ public class StudentPlayerRuleEngine extends PylosPlayer
             }
 
         }
+        else
+        {
+            move = moveEntry.getKey();
+            if ( moveEntry.getValue() < 0 )
+            {
+                game.pass();
+                return;
+            }
+        }
 
         game.removeSphere( move.getSphere() );
 
@@ -115,7 +136,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
     private void generateLines( PylosBoard board )
     {
         lines = new ArrayList <>();
-        neighbours = new ArrayList<>(  );
+        neighbours = new ArrayList <>();
 
         for (int j = 0; j < 2; j++)
         {
@@ -130,7 +151,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
                         board.getBoardLocation( i, j + 2, 0 ) );
                 lines.add( l );
 
-                if (l1 != null)
+                if ( l1 != null )
                     neighbours.add( new PylosNeighbour( l, l1 ) );
 
                 l1 = l;
@@ -142,7 +163,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
                 lines.add( l );
 
-                if (l2 != null)
+                if ( l2 != null )
                     neighbours.add( new PylosNeighbour( l, l2 ) );
 
                 l2 = l;
@@ -182,7 +203,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
             this.moveIntegerMap.put( move, value );
     }
 
-    private Move fireRules( PylosGameIF game, PylosBoard board )
+    private Map.Entry <Move, Integer> fireRules( PylosGameIF game, PylosBoard board )
     {
         //clear old list of moves
         this.moveIntegerMap = new HashMap <>();
@@ -206,10 +227,10 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
         try
         {
-            Move bestMove = moveIntegerMap.entrySet().stream()
-                    .sorted( Map.Entry.comparingByValue( (v1, v2) -> v2 - v1 ) )
+            Map.Entry <Move, Integer> bestMove = moveIntegerMap.entrySet().stream()
+                    .sorted( Map.Entry.comparingByValue( ( v1, v2 ) -> v2 - v1 ) )
                     .findFirst()
-                    .get().getKey();
+                    .get();
 
             session.dispose();
 

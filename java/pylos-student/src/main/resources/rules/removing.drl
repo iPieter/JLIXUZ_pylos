@@ -31,17 +31,17 @@ rule "Rather pass than enable four from other"
 salience 0
 when
     board : PylosBoard()
-    PylosGame( state == state.MOVE )
+    PylosGame( state == state.REMOVE_SECOND )
     square : PylosSquare( getInSquare() == 4
                 && (getInSquare( player ) <= 1
                        || getInSquare( player.OTHER ) == 3
                     ))
 then
     //get remaining location in square
-    PylosLocation location = Arrays.stream( square.getLocations())
-        .filter( l -> !l.hasAbove() )
-        .findFirst()
-        .get();
-
-    player.addMove( new Move( location, location.getSphere() ), -1 );
+    Arrays.stream( square.getLocations())
+        .filter( l -> l.isUsed())
+        .filter( l -> l.getSphere().PLAYER_COLOR == player.PLAYER_COLOR )
+        .forEach( l -> {
+               player.addMove( new Move( l, l.getSphere() ), -50 );
+         } );
 end
