@@ -7,6 +7,7 @@ import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.util.KnowledgeSessionHelper;
+import org.kie.api.definition.rule.Rule;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -215,6 +216,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
         //insert this object itself as a receiver of Move facts
         session.setGlobal( "player", this );
+        session.setGlobal( "ruleWeights", RuleWeights.getInstance() );
 
         session.insert( game );
         session.insert( board );

@@ -12,6 +12,7 @@ import java.util.Arrays
 import java.util.Optional
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+global be.kuleuven.pylos.player.student.RuleWeights ruleWeights
 
 rule "Give negative weight to move in unusable square"
 salience -200
@@ -25,7 +26,7 @@ when
                        || getInSquare( player.OTHER ) >= 1
                     ))
 then
-    player.addMove( move , -7 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
 end
 
 rule "dont help other finish top location"
@@ -43,7 +44,7 @@ when
                        || getInSquare( player.OTHER ) == 3
                     ))
 then
-    player.addMove( move , -25);
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()));
 end
 
 
@@ -57,5 +58,5 @@ when
     l2 : PylosLine( isEmptyMiddle() == false, middle == location)
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
-    player.addMove( move , -25 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
 end

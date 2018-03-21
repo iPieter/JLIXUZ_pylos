@@ -9,12 +9,15 @@ import be.kuleuven.pylos.player.PylosPlayerObserver;
 import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
 import be.kuleuven.pylos.player.codes.PylosPlayerMiniMax;
 import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
+import be.kuleuven.pylos.player.student.RuleWeights;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -33,17 +36,25 @@ public class PylosMain
 
 		/* !!! vm argument !!! -ea */
 
+        if( args.length != 1 )
+        {
+            System.out.println( "USAGE: java -jar pylos.jar weights.txt" );
+            System.exit( -1 );
+        }
+
+        System.out.println( args[0] );
+        RuleWeights.getInstance().init( args[0] );
+
         //new PylosMain().startSingleGame();
 		new PylosMain().startBattle();
-
     }
 
     public void startSingleGame()
     {
         Random random = new Random( 0 );
 
-        PylosPlayer randomPlayerCodes   = new PylosPlayerRandomFit();
-        PylosPlayer randomPlayerStudent = new StudentPlayerRandomFit();
+        PylosPlayer randomPlayerCodes   = new PylosPlayerBestFit();
+        PylosPlayer randomPlayerStudent = new StudentPlayerRuleEngine();
 
         PylosBoard pylosBoard = new PylosBoard();
         PylosGame  pylosGame  = new PylosGame( pylosBoard, randomPlayerCodes, randomPlayerStudent, random, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE );
@@ -56,7 +67,9 @@ public class PylosMain
         PylosPlayer playerLight = new PylosPlayerBestFit();
         PylosPlayer playerDark  = new StudentPlayerRuleEngine();
 
-        Battle.play( playerLight, playerDark, 100 );
+        double weights[] = Battle.play( playerLight, playerDark, 100 );
+
+        System.out.println( weights[1] );
     }
 
 }

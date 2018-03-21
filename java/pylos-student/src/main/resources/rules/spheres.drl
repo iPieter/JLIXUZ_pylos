@@ -9,6 +9,7 @@ import java.util.Optional
 import be.kuleuven.pylos.game.PylosLocation
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+global be.kuleuven.pylos.player.student.RuleWeights ruleWeights
 
 rule "Take from reserve for remaining moves"
 salience -100
@@ -18,7 +19,7 @@ when
 then
     PylosSphere sphere = board.getReserve( player );
 
-    player.setSphere(sphere, move, 0);
+    player.setSphere(sphere, move, ruleWeights.getWeight(drools.getRule().getName()));
     retract(move);
 end
 
@@ -41,7 +42,7 @@ then
         .findFirst();
 
     location.ifPresent(lo->{
-        player.setSphere(lo.getSphere(), move, 6); //drools.getRule().getName()
+        player.setSphere(lo.getSphere(), move, ruleWeights.getWeight(drools.getRule().getName())); //drools.getRule().getName()
         retract(move);
     });
 end

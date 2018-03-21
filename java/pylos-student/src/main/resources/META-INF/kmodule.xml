@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+los-core/src/main/java/META-INF/MANIFEST.MF<?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
 
     <kbase name="rules" packages="rules" eventProcessingMode="cloud">

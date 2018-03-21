@@ -12,6 +12,7 @@ import java.util.Optional
 import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+global be.kuleuven.pylos.player.student.RuleWeights ruleWeights
 
 rule "start own line"
     salience 0
@@ -25,10 +26,12 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
+     System.out.println(drools.getRule().getName());
+
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
-        player.addMove( move , 1 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     });
 end
@@ -48,7 +51,7 @@ then
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
-        player.addMove( move , 2 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     });end
 
@@ -67,7 +70,7 @@ then
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
-        player.addMove( move , 3 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     });end
 
@@ -86,7 +89,7 @@ then
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
-        player.addMove( move , 7 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     });
 end
@@ -101,7 +104,7 @@ when
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l2.getMiddle(), null );
-    player.addMove( move , 120 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -115,7 +118,7 @@ when
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l1.getMiddle(), null );
-    player.addMove( move , 120 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -129,7 +132,7 @@ when
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l2.getMiddle(), null );
-    player.addMove( move , 100 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -143,6 +146,6 @@ when
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l2.getMiddle(), null );
-    player.addMove( move , 60 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end

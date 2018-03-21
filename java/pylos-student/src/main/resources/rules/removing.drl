@@ -10,6 +10,7 @@ import be.kuleuven.pylos.player.student.PylosLine
 import java.util.Arrays
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+global be.kuleuven.pylos.player.student.RuleWeights ruleWeights
 
 rule "Remove own 4"
 salience 0
@@ -24,7 +25,7 @@ then
         .findFirst()
         .get();
 
-    player.addMove( new Move( location, location.getSphere() ), 1 );
+    player.addMove( new Move( location, location.getSphere() ), ruleWeights.getWeight(drools.getRule().getName()) );
 end
 
 rule "Rather pass than enable four from other"
@@ -42,6 +43,6 @@ then
         .filter( l -> l.isUsed())
         .filter( l -> l.getSphere().PLAYER_COLOR == player.PLAYER_COLOR )
         .forEach( l -> {
-               player.addMove( new Move( l, l.getSphere() ), -50 );
+               player.addMove( new Move( l, l.getSphere() ), ruleWeights.getWeight(drools.getRule().getName()) );
          } );
 end
