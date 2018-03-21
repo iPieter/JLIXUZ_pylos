@@ -25,7 +25,7 @@ when
                        || getInSquare( player.OTHER ) >= 1
                     ))
 then
-    player.addMove( move , -7 );
+    player.addMove( move , -25 );
 end
 
 rule "dont help other finish top location"
