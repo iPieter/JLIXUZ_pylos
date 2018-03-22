@@ -260,6 +260,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
                     .get();
 
             session.dispose();
+            session.destroy();
 
             //LOGGER.info( "Destroying session, received {} moves. Selecting highest.", moveIntegerMap.size() );
 
@@ -271,6 +272,8 @@ public class StudentPlayerRuleEngine extends PylosPlayer
             //game.pass();
         }
 
+        session.dispose();
+        session.destroy();
         return null;
     }
 
