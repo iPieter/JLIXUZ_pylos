@@ -22,7 +22,22 @@ when
     PylosGame( state == state.MOVE )
     square : PylosSquare( getInSquare() == 3
                 && location memberOf locations
-                && (getInSquare( player ) <= 2
+                && (getInSquare( player ) <= 1
+                       || getInSquare( player.OTHER ) >= 1
+                    ))
+then
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
+end
+
+rule "Give negative weight to move in potentially unusable square"
+salience -200
+when
+    board : PylosBoard()
+    move : Move(location : location)
+    PylosGame( state == state.MOVE )
+    square : PylosSquare( getInSquare() == 2
+                && location memberOf locations
+                && (getInSquare( player ) <= 1
                        || getInSquare( player.OTHER ) >= 1
                     ))
 then
@@ -36,13 +51,11 @@ when
     PylosGame( state == state.MOVE )
     move : Move(location : location)
     s1 : PylosSquare( getInSquare() == 3,
-            top : topLocation,
-            location memberOf locations)
-    s2 : PylosSquare( getInSquare() == 3
-                && topLocation memberOf locations
-                && (getInSquare( player ) == 0
-                       || getInSquare( player.OTHER ) == 3
-                    ))
+            location memberOf locations,
+            top : topLocation)
+    s2 : PylosSquare( getInSquare() == 3,
+                top memberOf locations,
+                getInSquare( player ) == 0 || getInSquare( player.OTHER ) == 3)
 then
     player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()));
 end
