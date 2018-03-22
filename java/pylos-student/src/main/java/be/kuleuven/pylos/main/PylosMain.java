@@ -73,26 +73,29 @@ public class PylosMain
         for( int i = 0; i < POP_SIZE; i++ )
         {
             List<Pair<String,Integer>> entity = RuleWeights.getInstance().getAsList();
+            population.add( entity );
+
+            if( i == 0 )
+                continue;
 
             entity.stream().forEach( stringIntegerPair -> { stringIntegerPair.setValue( random.nextInt( 201 ) - 100 ); } );
 
-            population.add( entity );
         }
 
         int runs = 0;
-        while ( runs < 10 )
+        while ( runs < 50 )
         {
             List<double[]> results = new ArrayList <>();
 
             for( int i = 0; i < POP_SIZE; i++ )
             {
                 RuleWeights.getInstance().setParams( population.get( i ));
-                PylosPlayer playerLight = new PylosPlayerBestFit();
+                PylosPlayer playerLight = new PylosPlayerBestFit( );
                 PylosPlayer playerDark  = new StudentPlayerRuleEngine();
                 double weights[] = Battle.play( playerLight, playerDark, 100 );
                 results.add( weights );
 
-                System.gc();
+                System.out.println( Arrays.toString( weights ) );
             }
 
             final Integer[] idx = IntStream.range( 0, POP_SIZE ).boxed().toArray( Integer[]::new );
@@ -112,17 +115,34 @@ public class PylosMain
 
                 List<Pair<String, Integer>> entity = new ArrayList<>();
 
+                boolean direction = random.nextBoolean();
+
                 for( int j = 0; j < population.get( i1 ).size(); j++ )
                 {
-                    if( j < index )
-                        entity.add( population.get( i1 ).get( j ).copy() );
+                    if( direction )
+                    {
+                        if( j < index )
+                            entity.add( population.get( i1 ).get( j ).copy() );
+                        else
+                            entity.add( population.get( i2 ).get( j ).copy() );
+                    }
                     else
-                        entity.add( population.get( i2 ).get( j ).copy() );
+                    {
+                        if( j > index )
+                            entity.add( population.get( i1 ).get( j ).copy() );
+                        else
+                            entity.add( population.get( i2 ).get( j ).copy() );
+                    }
                 }
 
-                int mutation = random.nextInt( entity.size() );
-                int change = random.nextInt( 100 ) -50;
-                entity.get( mutation ).setValue( entity.get( mutation ).getValue() + change );
+                int numChanges = random.nextInt( 5 );
+
+                for( int j = 0; j < numChanges; j++ )
+                {
+                    int mutation = random.nextInt( entity.size() );
+                    int change = random.nextInt( 100 ) -50;
+                    entity.get( mutation ).setValue( entity.get( mutation ).getValue() + change );
+                }
 
                 newPopulation.add( entity );
             }
