@@ -50,4 +50,9 @@ public class Pair<L,T>
         result = 31 * result + value.hashCode();
         return result;
     }
+
+    public Pair<L,T> copy()
+    {
+        return new Pair<L,T>( key, value);
+    }
 }
