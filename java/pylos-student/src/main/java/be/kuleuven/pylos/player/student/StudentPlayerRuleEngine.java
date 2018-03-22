@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
 /**
@@ -65,7 +66,14 @@ public class StudentPlayerRuleEngine extends PylosPlayer
             move = moveEntry.getKey();
         }
 
-        game.moveSphere( move.getSphere(), move.getLocation() );
+
+        try
+        {
+            game.moveSphere( move.getSphere(), move.getLocation() );
+        } catch ( AssertionError ex )
+        {
+            LOGGER.error( "FUCKING CODES FIX YOUR CODE" );
+        }
 
     }
 
