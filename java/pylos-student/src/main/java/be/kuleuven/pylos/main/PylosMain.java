@@ -12,12 +12,14 @@ import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
 import be.kuleuven.pylos.player.student.RuleWeights;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine;
+import com.sun.org.apache.bcel.internal.generic.POP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -64,12 +66,39 @@ public class PylosMain
 
     public void startBattle()
     {
+        Random random = new Random( 0 );
+
+        List<List<Pair<String,Integer>>> population = new ArrayList <>();
+
+        final int POP_SIZE = 10;
+
+        for( int i = 0; i < POP_SIZE; i++ )
+        {
+            List<Pair<String,Integer>> entity = RuleWeights.getInstance().getAsList();
+
+            entity.stream().forEach( stringIntegerPair -> { stringIntegerPair.setValue( random.nextInt( 201 ) - 100 ); } );
+
+            population.add( entity );
+        }
+
         PylosPlayer playerLight = new PylosPlayerBestFit();
         PylosPlayer playerDark  = new StudentPlayerRuleEngine();
 
-        double weights[] = Battle.play( playerLight, playerDark, 100 );
+        List<double[]> results = new ArrayList <>();
 
-        System.out.println( weights[1] );
+        for( int i = 0; i < POP_SIZE; i++ )
+        {
+            RuleWeights.getInstance().setParams( population.get( i ));
+            double weights[] = Battle.play( playerLight, playerDark, 100 );
+            results.add( weights );
+        }
+
+        for( int i = 0; i < POP_SIZE; i++ )
+        {
+            System.out.println( Arrays.toString( results.get( i ) ) );
+        }
+
+        //System.out.println( weights[1] );
     }
 
 }

@@ -1,11 +1,12 @@
 package be.kuleuven.pylos.player.student;
 
+import be.kuleuven.pylos.main.Pair;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RuleWeights
 {
@@ -64,8 +65,6 @@ public class RuleWeights
 
     public int getWeight( String ruleName )
     {
-        System.out.println( "REQUESTING WEIGHT" + ruleName );
-
         if( weights.containsKey( ruleName ) )
             return weights.get( ruleName );
 
@@ -75,5 +74,24 @@ public class RuleWeights
         System.exit( -1 );
 
         return 0;
+    }
+
+    public List<Pair<String, Integer>> getAsList()
+    {
+        List<Pair<String, Integer>> result = new ArrayList <>( );
+        for (Map.Entry<String, Integer> entry : weights.entrySet()) {
+            String key = entry.getKey().toString();
+            Integer value = entry.getValue();
+            result.add( new Pair<String, Integer>( key, value ) );
+        }
+
+        result.sort( Comparator.comparing( Pair::getKey ) );
+
+        return result;
+    }
+
+    public void setParams( List<Pair<String,Integer>> params )
+    {
+        params.forEach( stringIntegerPair -> { weights.put( stringIntegerPair.getKey(), stringIntegerPair.getValue() ); } );
     }
 }

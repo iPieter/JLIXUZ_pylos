@@ -97,6 +97,7 @@ public class Battle
         int totalDarkWin  = lightStartDarkWin + darkStartDarkWin;
         int totalDraw     = lightStartDraw + darkStartDraw;
 
+        /*
         System.out.println( "" );
         System.out.println( "----------------------------" );
         System.out.println( runs / 2 + " games where " + playerLightClass + " starts:" );
@@ -116,6 +117,7 @@ public class Battle
         System.out.println();
         System.out.println( "Time: " + String.format( "%.2f", totalPlayTime ) + " sec (" + String.format( "%.2f", totalPlayTime / runs ) + " sec / game)" );
         System.out.println( "----------------------------" );
+        */
 
         double[] wins = new double[]{ ( double ) ( totalLightWin ) / runs, ( double ) ( totalDarkWin ) / runs, ( double ) ( totalDraw ) / runs };
         return wins;

@@ -236,13 +236,13 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
             session.dispose();
 
-            LOGGER.info( "Destroying session, received {} moves. Selecting highest.", moveIntegerMap.size() );
+            //LOGGER.info( "Destroying session, received {} moves. Selecting highest.", moveIntegerMap.size() );
 
             return bestMove;
         }
         catch ( NoSuchElementException ex )
         {
-            LOGGER.warn( "No possible move received from rule engine." );
+            //LOGGER.warn( "No possible move received from rule engine." );
             //game.pass();
         }
 

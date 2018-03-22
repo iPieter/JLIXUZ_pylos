@@ -26,8 +26,6 @@ then
         .filter( l -> !l.isUsed() && l.isUsable())
         .findFirst();
 
-     System.out.println(drools.getRule().getName());
-
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
