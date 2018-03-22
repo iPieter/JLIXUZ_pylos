@@ -21,12 +21,11 @@ when
     square : PylosSquare( getInSquare() == 4 && (getInSquare( player ) == 4 || getInSquare( player.OTHER ) == 0 ) )
 then
     //get remaining location in square
-    PylosLocation location = Arrays.stream( square.getLocations())
+    Optional<PylosLocation> location = Arrays.stream( square.getLocations())
         .filter( l -> !l.hasAbove() )
-        .findFirst()
-        .get();
+        .findFirst();
 
-    player.addMove( new Move( location, location.getSphere() ), ruleWeights.getWeight(drools.getRule().getName()) );
+    location.ifPresent( lo-> player.addMove( new Move( location.get(), location.get().getSphere() ), ruleWeights.getWeight(drools.getRule().getName()) ));
 end
 
 rule "Remove"
@@ -43,7 +42,7 @@ then
         .filter( l -> l.getSphere().canRemove() )
         .findFirst();
 
-     location.ifPresent(lo->player.addMove( new Move( lo, lo.getSphere() ), 1 ));
+     location.ifPresent(lo->player.addMove( new Move( lo, lo.getSphere() ), ruleWeights.getWeight(drools.getRule().getName()) ));
 end
 
 rule "Rather pass than enable four from other"

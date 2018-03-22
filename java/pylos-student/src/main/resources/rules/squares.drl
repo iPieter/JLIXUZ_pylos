@@ -129,6 +129,6 @@ then
         .map( l -> l.getSphere() )
         .findFirst();
 
-    sphere.ifPresent(pylosLocation->player.addMove( new Move( square.getTopLocation(), sphere.get() ), 4 ));
+    sphere.ifPresent(pylosLocation->player.addMove( new Move( square.getTopLocation(), sphere.get() ), ruleWeights.getWeight(drools.getRule().getName()) ));
 
 end*/

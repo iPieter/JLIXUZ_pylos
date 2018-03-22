@@ -70,7 +70,7 @@ public class PylosMain
 
         List<List<Pair<String,Integer>>> population = new ArrayList <>();
 
-        final int POP_SIZE = 10;
+        final int POP_SIZE = 40;
 
         for( int i = 0; i < POP_SIZE; i++ )
         {
@@ -81,14 +81,14 @@ public class PylosMain
             population.add( entity );
         }
 
-        PylosPlayer playerLight = new PylosPlayerBestFit();
-        PylosPlayer playerDark  = new StudentPlayerRuleEngine();
-
         List<double[]> results = new ArrayList <>();
 
         for( int i = 0; i < POP_SIZE; i++ )
         {
+            System.out.println( i );
             RuleWeights.getInstance().setParams( population.get( i ));
+            PylosPlayer playerLight = new PylosPlayerBestFit();
+            PylosPlayer playerDark  = new StudentPlayerRuleEngine();
             double weights[] = Battle.play( playerLight, playerDark, 100 );
             results.add( weights );
         }

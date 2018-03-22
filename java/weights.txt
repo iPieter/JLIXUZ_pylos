@@ -19,3 +19,4 @@
 "Give negative weight to move in unusable square":-7
 "dont help other finish top location":-25
 "veto removing from T":-25
+"Remove":1
