@@ -55,4 +55,13 @@ public class Pair<L,T>
     {
         return new Pair<L,T>( key, value);
     }
+
+    @Override
+    public String toString()
+    {
+        return "{" +
+                 key +
+                ":" + value +
+                '}';
+    }
 }

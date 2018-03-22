@@ -120,10 +120,15 @@ public class PylosMain
                         entity.add( population.get( i2 ).get( j ).copy() );
                 }
 
+                int mutation = random.nextInt( entity.size() );
+                int change = random.nextInt( 100 ) -50;
+                entity.get( mutation ).setValue( entity.get( mutation ).getValue() + change );
+
                 newPopulation.add( entity );
             }
 
             System.out.println( Arrays.toString( results.get( idx[0] ) ) );
+            System.out.println( population.get( idx[0] ) );
 
             population = newPopulation;
 
