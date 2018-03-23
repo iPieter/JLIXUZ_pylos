@@ -9,12 +9,16 @@ import be.kuleuven.pylos.player.PylosPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Jan on 16/02/2015.
  */
 public class PylosPlayerBestFit extends PylosPlayer
 {
+
+    private static final Logger LOGGER = Logger.getLogger("PylosPlayerBestFit");
 
     //	public static Random random = new Random(218);
     private PylosLocation lastPylosLocation;
@@ -82,8 +86,14 @@ public class PylosPlayerBestFit extends PylosPlayer
             }
         }
 
-        game.moveSphere( sphere, toLocation );
-        lastPylosLocation = toLocation;
+        try
+        {
+            game.moveSphere( sphere, toLocation );
+            lastPylosLocation = toLocation;
+        } catch ( AssertionError ex )
+        {
+            LOGGER.log( Level.SEVERE, "FUCKING CODES FIX YOUR CODE" );
+        }
     }
 
     private PylosLocation getMaxInSquare( ArrayList <PylosLocation> locations, PylosPlayer player )

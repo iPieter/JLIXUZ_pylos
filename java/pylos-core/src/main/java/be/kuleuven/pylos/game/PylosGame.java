@@ -302,6 +302,7 @@ public class PylosGame implements PylosGameIF
     {
         setState( PylosGameState.COMPLETED );
         /* put all spheres of winning player */
+        /*
         for ( PylosLocation bl : board.getLocations() )
         {
             if ( bl.isUsable() )
@@ -310,7 +311,7 @@ public class PylosGame implements PylosGameIF
                 board.add( reserveSphere, bl );
                 gameObserver.move( reserveSphere, null );
             }
-        }
+        }*/
     }
 
     private void signalFinished()

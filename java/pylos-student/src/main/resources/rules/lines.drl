@@ -12,6 +12,7 @@ import java.util.Optional
 import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+global be.kuleuven.pylos.player.student.RuleWeights ruleWeights
 
 rule "start own line"
     salience 0
@@ -28,7 +29,7 @@ then
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
-        player.addMove( move , 1 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     });
 end
@@ -48,7 +49,7 @@ then
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
-        player.addMove( move , 2 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     });end
 
@@ -60,16 +61,15 @@ when
     line : PylosLine( isFilledLine() == false && getInLineOwn() == 1 )
 then
     //get remaining location in square
-    Optional<PylosLocation> location = line.getLocations().stream()
+    line.getLocations().stream()
         .filter( l -> !l.isUsed() && l.isUsable())
-        .findFirst();
+        .forEach(pylosLocation-> {
 
-    location.ifPresent(pylosLocation-> {
-
-        Move move = new Move( location.get(), null );
-        player.addMove( move , 3 );
+        Move move = new Move( pylosLocation, null );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
-    });end
+    });
+end
 
 rule "Create own line"
     salience 0
@@ -86,7 +86,7 @@ then
     location.ifPresent(pylosLocation-> {
 
         Move move = new Move( location.get(), null );
-        player.addMove( move , 7 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     });
 end
@@ -97,11 +97,11 @@ when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
     l1 : PylosLine( getInLineOwn() == 3 )
-    l2 : PylosLine( isFilledLine() == false && isEmptyMiddle() == true && getInLineOther() == 0 )
+    l2 : PylosLine( isFilledLine() == false, isEmptyMiddle() == true, getInLineOther() == 0 , middle.isUsable())
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l2.getMiddle(), null );
-    player.addMove( move , 120 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -110,12 +110,12 @@ rule "Create T from V"
 when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
-    l1 : PylosLine( getInLineOwn() == 2  && isEmptyMiddle() == true )
-    l2 : PylosLine( isFilledLine() ==  false && isEmptyMiddle() == false && getInLineOther() == 0 )
+    l1 : PylosLine( getInLineOwn() == 2, isEmptyMiddle() == true, middle.isUsable() )
+    l2 : PylosLine( isFilledLine() ==  false, isEmptyMiddle() == false, getInLineOther() == 0 )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l1.getMiddle(), null );
-    player.addMove( move , 120 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -125,11 +125,11 @@ when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
     l1 : PylosLine( getInLineOther() == 3 )
-    l2 : PylosLine( isFilledLine() == false && isEmptyMiddle() == true && getInLineOwn() == 0 )
+    l2 : PylosLine( isFilledLine() == false && isEmptyMiddle() == true && getInLineOwn() == 0, middle.isUsable() )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
     Move move = new Move( l2.getMiddle(), null );
-    player.addMove( move , 100 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -138,11 +138,11 @@ rule "Block other V"
 when
     board : PylosBoard()
     PylosGame( state == state.MOVE )
-    l1 : PylosLine( getInLineOther() == 2  && isEmptyMiddle() == true )
-    l2 : PylosLine( isFilledLine() ==  false && isEmptyMiddle() == false && getInLineOwn() == 0 )
+    l1 : PylosLine( getInLineOther() == 2, isEmptyMiddle() == true, middle.isUsable() )
+    l2 : PylosLine( getInLine() == 1, isMMiddleOther() )
     p : PylosNeighbour( (line1 == l1 && line2 == l2) || (line1 == l2 && line2 == l1) )
 then
-    Move move = new Move( l2.getMiddle(), null );
-    player.addMove( move , 60 );
+    Move move = new Move( l1.getMiddle(), null );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end

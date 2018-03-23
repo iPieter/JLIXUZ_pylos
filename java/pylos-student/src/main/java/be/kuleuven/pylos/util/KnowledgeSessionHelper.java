@@ -38,7 +38,7 @@ public class KnowledgeSessionHelper
             nRules += pack.getRules().size();
         }
 
-        System.out.println("RULES: " + nRules);
+        //System.out.println("RULES: " + nRules);
 
         return kieSession;
     }

@@ -7,12 +7,14 @@ import be.kuleuven.pylos.game.PylosLocation;
 import be.kuleuven.pylos.game.PylosSphere;
 import be.kuleuven.pylos.player.PylosPlayer;
 import be.kuleuven.pylos.util.KnowledgeSessionHelper;
+import org.kie.api.definition.rule.Rule;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
 /**
@@ -64,7 +66,14 @@ public class StudentPlayerRuleEngine extends PylosPlayer
             move = moveEntry.getKey();
         }
 
-        game.moveSphere( move.getSphere(), move.getLocation() );
+
+        try
+        {
+            game.moveSphere( move.getSphere(), move.getLocation() );
+        } catch ( AssertionError ex )
+        {
+            LOGGER.error( "FUCKING CODES FIX YOUR CODE" );
+        }
 
     }
 
@@ -170,18 +179,35 @@ public class StudentPlayerRuleEngine extends PylosPlayer
             }
         }
 
+        PylosLine l1 = null; //first line for neighbours
+        PylosLine l2 = null; //and the rotated second line
+
         for (int i = 0; i < 3; i++)
         {
 
-            lines.add( new PylosLine( this.PLAYER_COLOR,
+            PylosLine l = new PylosLine( this.PLAYER_COLOR,
                     board.getBoardLocation( i, 0, 1 ),
                     board.getBoardLocation( i, 1, 1 ),
-                    board.getBoardLocation( i, 2, 1 ) ) );
+                    board.getBoardLocation( i, 2, 1 ) );
 
-            lines.add( new PylosLine( this.PLAYER_COLOR,
+            lines.add( l );
+
+            if ( l1 != null )
+                neighbours.add( new PylosNeighbour( l, l1 ) );
+
+            l1 = l;
+
+            l = new PylosLine( this.PLAYER_COLOR,
                     board.getBoardLocation( 0, i, 1 ),
                     board.getBoardLocation( 1, i, 1 ),
-                    board.getBoardLocation( 2, i, 1 ) ) );
+                    board.getBoardLocation( 2, i, 1 ) );
+
+            lines.add( l );
+
+            if ( l2 != null )
+                neighbours.add( new PylosNeighbour( l, l2 ) );
+
+            l2 = l;
         }
     }
 
@@ -215,6 +241,7 @@ public class StudentPlayerRuleEngine extends PylosPlayer
 
         //insert this object itself as a receiver of Move facts
         session.setGlobal( "player", this );
+        session.setGlobal( "ruleWeights", RuleWeights.getInstance() );
 
         session.insert( game );
         session.insert( board );
@@ -233,17 +260,20 @@ public class StudentPlayerRuleEngine extends PylosPlayer
                     .get();
 
             session.dispose();
+            session.destroy();
 
-            LOGGER.info( "Destroying session, received {} moves. Selecting highest.", moveIntegerMap.size() );
+            //LOGGER.info( "Destroying session, received {} moves. Selecting highest.", moveIntegerMap.size() );
 
             return bestMove;
         }
         catch ( NoSuchElementException ex )
         {
-            LOGGER.warn( "No possible move received from rule engine." );
+            //LOGGER.warn( "No possible move received from rule engine." );
             //game.pass();
         }
 
+        session.dispose();
+        session.destroy();
         return null;
     }
 

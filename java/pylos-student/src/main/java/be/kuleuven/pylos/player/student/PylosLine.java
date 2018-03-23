@@ -108,6 +108,16 @@ public class PylosLine
         return getInLine( color.other() );
     }
 
+    public boolean isMMiddleOWn()
+    {
+        return middle.isUsed() && middle.getSphere().PLAYER_COLOR == color;
+    }
+
+    public boolean isMMiddleOther()
+    {
+        return middle.isUsed() && middle.getSphere().PLAYER_COLOR == color.other();
+    }
+
     public PylosLocation getMiddle()
     {
         return middle;

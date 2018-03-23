@@ -1,0 +1,22 @@
+"start own line":-71
+"Block other line":2
+"Create line stub":3
+"Create own line":7
+"Create T from line":99
+"Create T from V":94
+"block other T":85
+"Block other V":60
+"Remove own 4":60
+"Rather pass than enable four from other":-50
+"Take from reserve for remaining moves":0
+"Take from board for remaining moves":-88
+"First move as white":17
+"First move as black":75
+"Find squares with 3 spheres from 1 player":180
+"Find filled squares with 3 spheres from 1 player":94
+"Find filled squares with 2 spheres from 1 player":5
+"Move to top":5
+"Give negative weight to move in unusable square":-2
+"dont help other finish top location":97
+"veto removing from T":-25
+"Remove":5

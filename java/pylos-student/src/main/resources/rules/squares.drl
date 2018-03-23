@@ -10,6 +10,7 @@ import java.util.Arrays
 import java.util.Optional
 
 global be.kuleuven.pylos.player.student.StudentPlayerRuleEngine player
+global be.kuleuven.pylos.player.student.RuleWeights ruleWeights
 
 rule "First move as white"
 salience 0
@@ -20,7 +21,7 @@ then
     PylosLocation location = board.getBoardLocation( 1, 1, 0 );
     PylosSphere sphere = board.getSpheres( player )[0];
 
-    player.addMove( new Move( location, sphere ), 1 );
+    player.addMove( new Move( location, sphere ), ruleWeights.getWeight(drools.getRule().getName()) );
 end
 
 rule "First move as black"
@@ -38,7 +39,7 @@ then
 
     PylosSphere sphere = board.getSpheres( player )[0];
 
-    player.addMove( new Move( location, sphere ), 1 );
+    player.addMove( new Move( location, sphere ), ruleWeights.getWeight(drools.getRule().getName()) );
 end
 
 rule "Find squares with 3 spheres from 1 player"
@@ -58,7 +59,7 @@ then
 
     if (location.isPresent()){
         Move move = new Move( location.get(), null );
-        player.addMove( move , 180 );
+        player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
         insert( move );
     }
 end
@@ -75,7 +76,7 @@ when
                 && topLocation.usable)
 then
     Move move = new Move( square.getTopLocation(), null );
-    player.addMove( move , 80 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -91,7 +92,7 @@ when
                 && topLocation.usable)
 then
     Move move = new Move( square.getTopLocation(), null );
-    player.addMove( move , 5 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -103,7 +104,7 @@ when
     square : PylosSquare( getInSquare() == 4, topLocation.usable)
 then
     Move move = new Move( square.getTopLocation(), null );
-    player.addMove( move , 5 );
+    player.addMove( move , ruleWeights.getWeight(drools.getRule().getName()) );
     insert( move );
 end
 
@@ -128,6 +129,6 @@ then
         .map( l -> l.getSphere() )
         .findFirst();
 
-    sphere.ifPresent(pylosLocation->player.addMove( new Move( square.getTopLocation(), sphere.get() ), 4 ));
+    sphere.ifPresent(pylosLocation->player.addMove( new Move( square.getTopLocation(), sphere.get() ), ruleWeights.getWeight(drools.getRule().getName()) ));
 
 end*/

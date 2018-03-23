@@ -9,13 +9,16 @@ import be.kuleuven.pylos.player.PylosPlayerObserver;
 import be.kuleuven.pylos.player.codes.PylosPlayerBestFit;
 import be.kuleuven.pylos.player.codes.PylosPlayerMiniMax;
 import be.kuleuven.pylos.player.codes.PylosPlayerRandomFit;
+import be.kuleuven.pylos.player.student.RuleWeights;
 import be.kuleuven.pylos.player.student.StudentPlayerRandomFit;
 import be.kuleuven.pylos.player.student.StudentPlayerRuleEngine;
+import com.sun.org.apache.bcel.internal.generic.POP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
-import java.util.Random;
+import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Created by Jan on 15/11/2016.
@@ -33,17 +36,25 @@ public class PylosMain
 
 		/* !!! vm argument !!! -ea */
 
+        if( args.length != 1 )
+        {
+            System.out.println( "USAGE: java -jar pylos.jar weights.txt" );
+            System.exit( -1 );
+        }
+
+        System.out.println( args[0] );
+        RuleWeights.getInstance().init( args[0] );
+
         //new PylosMain().startSingleGame();
 		new PylosMain().startBattle();
-
     }
 
     public void startSingleGame()
     {
         Random random = new Random( 0 );
 
-        PylosPlayer randomPlayerCodes   = new PylosPlayerRandomFit();
-        PylosPlayer randomPlayerStudent = new StudentPlayerRandomFit();
+        PylosPlayer randomPlayerCodes   = new PylosPlayerBestFit();
+        PylosPlayer randomPlayerStudent = new StudentPlayerRuleEngine();
 
         PylosBoard pylosBoard = new PylosBoard();
         PylosGame  pylosGame  = new PylosGame( pylosBoard, randomPlayerCodes, randomPlayerStudent, random, PylosGameObserver.CONSOLE_GAME_OBSERVER, PylosPlayerObserver.NONE );
@@ -53,10 +64,98 @@ public class PylosMain
 
     public void startBattle()
     {
-        PylosPlayer playerLight = new PylosPlayerBestFit();
-        PylosPlayer playerDark  = new StudentPlayerRuleEngine();
+        Random random = new Random( 0 );
 
-        Battle.play( playerLight, playerDark, 100 );
+        List<List<Pair<String,Integer>>> population = new ArrayList <>();
+
+        final int POP_SIZE = 10;
+
+        for( int i = 0; i < POP_SIZE; i++ )
+        {
+            List<Pair<String,Integer>> entity = RuleWeights.getInstance().getAsList();
+            population.add( entity );
+
+            if( i == 0 )
+                continue;
+
+            entity.stream().forEach( stringIntegerPair -> { stringIntegerPair.setValue( random.nextInt( 201 ) - 100 ); } );
+
+        }
+
+        int runs = 0;
+        while ( runs < 50 )
+        {
+            List<double[]> results = new ArrayList <>();
+
+            for( int i = 0; i < POP_SIZE; i++ )
+            {
+                RuleWeights.getInstance().setParams( population.get( i ));
+                PylosPlayer playerLight = new PylosPlayerBestFit( );
+                PylosPlayer playerDark  = new StudentPlayerRuleEngine();
+                double weights[] = Battle.play( playerLight, playerDark, 100 );
+                results.add( weights );
+
+                System.out.println( Arrays.toString( weights ) );
+            }
+
+            final Integer[] idx = IntStream.range( 0, POP_SIZE ).boxed().toArray( Integer[]::new );
+            Arrays.sort(idx, ( o1, o2 ) -> Double.compare( results.get( o2 )[1], results.get( o1 )[1] ) );
+
+            List<List<Pair<String, Integer>>> newPopulation = new ArrayList<>();
+
+            for( int i = 0; i < POP_SIZE; i++ )
+            {
+                int r1 = random.nextInt( 3 );
+                int r2 = random.nextInt( 3 );
+
+                int i1 = idx[r1];
+                int i2 = idx[r2];
+
+                int index = random.nextInt( population.get( 0 ).size() );
+
+                List<Pair<String, Integer>> entity = new ArrayList<>();
+
+                boolean direction = random.nextBoolean();
+
+                for( int j = 0; j < population.get( i1 ).size(); j++ )
+                {
+                    if( direction )
+                    {
+                        if( j < index )
+                            entity.add( population.get( i1 ).get( j ).copy() );
+                        else
+                            entity.add( population.get( i2 ).get( j ).copy() );
+                    }
+                    else
+                    {
+                        if( j > index )
+                            entity.add( population.get( i1 ).get( j ).copy() );
+                        else
+                            entity.add( population.get( i2 ).get( j ).copy() );
+                    }
+                }
+
+                int numChanges = random.nextInt( 5 );
+
+                for( int j = 0; j < numChanges; j++ )
+                {
+                    int mutation = random.nextInt( entity.size() );
+                    int change = random.nextInt( 100 ) -50;
+                    entity.get( mutation ).setValue( entity.get( mutation ).getValue() + change );
+                }
+
+                newPopulation.add( entity );
+            }
+
+            System.out.println( Arrays.toString( results.get( idx[0] ) ) );
+            System.out.println( population.get( idx[0] ) );
+
+            population = newPopulation;
+
+            runs++;
+        }
+
+        //System.out.println( weights[1] );
     }
 
 }
